@@ -11,12 +11,14 @@ function ProductListingContent() {
     const [categories, setCategories] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
 
     const search = searchParams.get('search') || '';
     const category = searchParams.get('category') || '';
 
     const loadData = useCallback(async () => {
         setLoading(true);
+        setError(false);
         try {
             const [prods, cats] = await Promise.all([
                 fetchProducts({ search, category, limit: 40 }),
@@ -26,7 +28,23 @@ function ProductListingContent() {
             setTotal(prods.total);
             setCategories(cats);
         } catch (e) {
-            console.error(e);
+            console.error('API Error:', e);
+            setError(true);
+            // Try fetching again after a delay (Railway cold start)
+            setTimeout(async () => {
+                try {
+                    const [prods, cats] = await Promise.all([
+                        fetchProducts({ search, category, limit: 40 }),
+                        fetchCategories(),
+                    ]);
+                    setProducts(prods.products);
+                    setTotal(prods.total);
+                    setCategories(cats);
+                    setError(false);
+                } catch (e2) {
+                    console.error('Retry also failed:', e2);
+                }
+            }, 3000);
         } finally {
             setLoading(false);
         }
@@ -63,7 +81,7 @@ function ProductListingContent() {
             </div>
 
             <div className="page-container" style={{ paddingBottom: '40px' }}>
-                {/* Specific 3-Column Banner Grid (Screenshot Style) */}
+                {/* 3-Column Banner Grid */}
                 {!category && !search && (
                     <div className="home-banner-grid" style={{ marginTop: '16px' }}>
                         <div className="banner-item"><img src="/banner_jewellery.png" alt="Jewellery" /></div>
@@ -72,7 +90,7 @@ function ProductListingContent() {
                     </div>
                 )}
 
-                {/* Dense Sub-Category Grid (Screenshot Style) */}
+                {/* Dense Sub-Category Grid */}
                 {!category && !search && (
                     <div className="subcat-grid">
                         {[
@@ -97,7 +115,7 @@ function ProductListingContent() {
                     </div>
                 )}
 
-                {/* Shop for Loved Ones (Lifestyle Section) */}
+                {/* Shop for Loved Ones */}
                 {!category && !search && (
                     <div className="lifestyle-section">
                         <div className="lifestyle-header">
@@ -111,8 +129,21 @@ function ProductListingContent() {
                     </div>
                 )}
 
-                {loading ? (
-                    <div className="products-grid">
+                {/* Error State - API Connection Issue */}
+                {error && products.length === 0 && !loading && (
+                    <div style={{ textAlign: 'center', padding: '40px 20px', background: '#fff3e0', borderRadius: 8, marginTop: 24 }}>
+                        <div style={{ fontSize: 48, marginBottom: 12 }}>⏳</div>
+                        <h3 style={{ fontSize: 18, fontWeight: 600, color: '#e65100', marginBottom: 8 }}>Backend is waking up...</h3>
+                        <p style={{ fontSize: 14, color: '#666', marginBottom: 16 }}>Our server is on a free tier and takes a few seconds to start. Products will appear shortly.</p>
+                        <button className="btn btn-primary" style={{ width: 'auto', padding: '10px 24px' }} onClick={loadData}>
+                            🔄 Retry Now
+                        </button>
+                    </div>
+                )}
+
+                {/* Loading Skeleton */}
+                {loading && (
+                    <div className="products-grid" style={{ marginTop: 24 }}>
                         {Array.from({ length: 12 }).map((_, i) => (
                             <div key={i} style={{ background: 'white', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                                 <div className="skeleton" style={{ width: '100%', aspectRatio: '1' }} />
@@ -121,7 +152,10 @@ function ProductListingContent() {
                             </div>
                         ))}
                     </div>
-                ) : (search || category) ? (
+                )}
+
+                {/* Search/Category Results */}
+                {!loading && (search || category) && products.length > 0 && (
                     <>
                         <div className="results-info">
                             {search && <><span>"{search}"</span> — </>}
@@ -132,9 +166,12 @@ function ProductListingContent() {
                             {products.map(p => <ProductCard key={p.id} product={p} />)}
                         </div>
                     </>
-                ) : (
+                )}
+
+                {/* Home Page Product Sections */}
+                {!loading && !search && !category && products.length > 0 && (
                     <>
-                        {/* Spotlight Section (Red) */}
+                        {/* Spotlight */}
                         <div className="spotlight-section">
                             <div className="spotlight-header">
                                 <h2>Spotlight's On</h2>
@@ -145,7 +182,7 @@ function ProductListingContent() {
                             </div>
                         </div>
 
-                        {/* Brands in Spotlight (Screenshot Style) */}
+                        {/* Brands in Spotlight */}
                         <div className="branded-spotlight">
                             <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px' }}>Brands in Spotlight</h2>
                             <div className="branded-spotlight-grid">
@@ -173,25 +210,22 @@ function ProductListingContent() {
                             </div>
                         </div>
 
-                        {/* Themed Category Sections */}
+                        {/* Category Sections */}
                         {categories.map(cat => {
                             const catProducts = products.filter(p => p.category_id === cat.id).slice(0, 8);
                             if (catProducts.length === 0) return null;
 
-                            // Special style for Home (Category 4) - Blueish background from screenshot
                             if (cat.id === 4) {
                                 return (
                                     <div key={cat.id} className="themed-section purple">
                                         <div className="themed-section-header">
                                             <h2>Home Decor & Furnishing</h2>
-                                            <button className="btn btn-secondary" style={{ padding: '6px 16px', fontSize: '12px' }} onClick={() => setCategory(cat.id)}>
-                                                →
-                                            </button>
+                                            <button className="btn btn-secondary" style={{ padding: '6px 16px', fontSize: '12px' }} onClick={() => setCategory(cat.id)}>→</button>
                                         </div>
                                         <div className="themed-scroll-row">
                                             {catProducts.map(p => (
                                                 <a href={`/product/${p.id}`} key={p.id} className="themed-product-tile">
-                                                    <img src={JSON.parse(p.images || '[]')[0]} alt={p.name} />
+                                                    <img src={Array.isArray(p.images) ? p.images[0] : JSON.parse(p.images || '[]')[0]} alt={p.name} />
                                                     <p>{p.name.split(' ').slice(0, 3).join(' ')}</p>
                                                     <p className="offer">Special offer</p>
                                                 </a>
