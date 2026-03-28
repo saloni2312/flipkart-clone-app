@@ -27,9 +27,11 @@ router.get('/', (req, res) => {
 
 // POST /api/cart
 router.post('/', (req, res) => {
-    const { productId, quantity = 1 } = req.body;
+    console.log('🛒 POST /api/cart - Body:', req.body);
+    let { productId, quantity = 1 } = req.body;
     if (!productId) return res.status(400).json({ error: 'productId required' });
 
+    productId = parseInt(productId);
     const product = db.prepare('SELECT * FROM products WHERE id = ?').get(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
 

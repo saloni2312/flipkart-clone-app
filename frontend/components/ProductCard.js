@@ -10,10 +10,10 @@ export default function ProductCard({ product }) {
         e.stopPropagation();
         try {
             await addToCart(product.id);
-            // We rely on the 'cart-updated' event which is already bubbles/listened by Navbar
             alert(`✅ ${product.name} added to cart!`);
         } catch (error) {
             console.error(error);
+            alert(`❌ Failed to add to cart: ${error.message}\nMake sure your backend is running.`);
         }
     };
 
