@@ -11,14 +11,14 @@ function ProductListingContent() {
     const [categories, setCategories] = useState([]);
     const [total, setTotal] = useState(0);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState(null);
 
     const search = searchParams.get('search') || '';
     const category = searchParams.get('category') || '';
 
     const loadData = useCallback(async () => {
         setLoading(true);
-        setError(false);
+        setError(null);
         try {
             const [prods, cats] = await Promise.all([
                 fetchProducts({ search, category, limit: 40 }),
@@ -29,26 +29,28 @@ function ProductListingContent() {
             setCategories(cats);
         } catch (e) {
             console.error('API Error:', e);
-            setError(true);
+            setError(e.message || 'Unknown network error');
             // Try fetching again after a delay (Railway cold start)
             setTimeout(async () => {
-                try {
-                    const [prods, cats] = await Promise.all([
-                        fetchProducts({ search, category, limit: 40 }),
-                        fetchCategories(),
-                    ]);
-                    setProducts(prods.products);
-                    setTotal(prods.total);
-                    setCategories(cats);
-                    setError(false);
-                } catch (e2) {
-                    console.error('Retry also failed:', e2);
+                if (products.length === 0) {
+                    try {
+                        const [prods, cats] = await Promise.all([
+                            fetchProducts({ search, category, limit: 40 }),
+                            fetchCategories(),
+                        ]);
+                        setProducts(prods.products);
+                        setTotal(prods.total);
+                        setCategories(cats);
+                        setError(null);
+                    } catch (e2) {
+                        console.error('Retry also failed:', e2);
+                    }
                 }
-            }, 3000);
+            }, 5000);
         } finally {
             setLoading(false);
         }
-    }, [search, category]);
+    }, [search, category, products.length]);
 
     useEffect(() => { loadData(); }, [loadData]);
 
@@ -135,6 +137,14 @@ function ProductListingContent() {
                         <div style={{ fontSize: 48, marginBottom: 12 }}>⏳</div>
                         <h3 style={{ fontSize: 18, fontWeight: 600, color: '#e65100', marginBottom: 8 }}>Backend is waking up...</h3>
                         <p style={{ fontSize: 14, color: '#666', marginBottom: 16 }}>Our server is on a free tier and takes a few seconds to start. Products will appear shortly.</p>
+
+                        <div style={{ margin: '16px auto', padding: '12px', background: '#f5f5f5', borderRadius: 4, maxWidth: 500, textAlign: 'left', fontSize: 11, fontFamily: 'monospace', color: '#666', border: '1px solid #ddd' }}>
+                            <p style={{ fontWeight: 700, marginBottom: 4, color: '#333' }}>🔧 Debug Info:</p>
+                            <p><strong>Error:</strong> {error}</p>
+                            <p><strong>Target API:</strong> {require('@/lib/api').API_BASE}</p>
+                            <p style={{ marginTop: 8, color: '#2874f0' }}>Tip: If Target API shows "localhost", Vercel hasn't redeployed your latest changes yet.</p>
+                        </div>
+
                         <button className="btn btn-primary" style={{ width: 'auto', padding: '10px 24px' }} onClick={loadData}>
                             🔄 Retry Now
                         </button>

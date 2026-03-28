@@ -1,5 +1,14 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://flipkart-clone-app-production.up.railway.app';
-const API_BASE = API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`;
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://flipkart-clone-app-production.up.railway.app';
+export const API_BASE = API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`;
+
+export async function ping() {
+    try {
+        const res = await fetch(`${API_BASE}/health`);
+        return await res.json();
+    } catch (e) {
+        return { error: e.message };
+    }
+}
 
 export async function fetchProducts(params = {}) {
     const query = new URLSearchParams(params).toString();
