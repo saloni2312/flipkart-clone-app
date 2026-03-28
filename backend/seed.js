@@ -4,272 +4,115 @@ const categories = [
     { id: 1, name: 'Mobiles', icon: '📱' },
     { id: 2, name: 'Fashion', icon: '👗' },
     { id: 3, name: 'Electronics', icon: '💻' },
-    { id: 4, name: 'Home & Kitchen', icon: '🏠' },
-    { id: 5, name: 'Books', icon: '📚' },
+    { id: 4, name: 'Home', icon: '🏠' },
+    { id: 5, name: 'Appliances', icon: '📺' },
     { id: 6, name: 'Beauty', icon: '💄' },
+    { id: 7, name: 'Toys', icon: '🧸' },
 ];
 
 const products = [
-    // Mobiles (Category 1)
-    {
-        category_id: 1, name: 'Samsung Galaxy S24 Ultra 5G (Titanium Black, 256 GB)', price: 109999, original_price: 134999,
-        rating: 4.5, review_count: 12453,
-        description: 'Flagship Samsung smartphone with 200MP camera, Snapdragon 8 Gen 3, and stunning AI features.',
-        stock: 50,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600']),
-        specs: JSON.stringify({ 'Display': '6.8" QHD+', 'Processor': 'Snapdragon 8 Gen 3', 'RAM': '12 GB' })
-    },
-    {
-        category_id: 1, name: 'Apple iPhone 15 (Blue, 128 GB)', price: 65999, original_price: 79900,
-        rating: 4.6, review_count: 45231,
-        description: 'Experience the magic of iPhone 15 with Dynamic Island and a 48MP main camera.',
-        stock: 100,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1696446701796-da61225697cc?w=600']),
-        specs: JSON.stringify({ 'Display': '6.1" OLED', 'Chip': 'A16 Bionic', 'Storage': '128 GB' })
-    },
-    {
-        category_id: 1, name: 'Google Pixel 8 (Hazel, 128 GB)', price: 59999, original_price: 75999,
-        rating: 4.4, review_count: 8234,
-        description: 'Powerful AI and the best camera for everyday photos and videos.',
-        stock: 30,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600']),
-        specs: JSON.stringify({ 'Display': '6.2" Actua', 'Processor': 'Tensor G3', 'RAM': '8 GB' })
-    },
-    {
-        category_id: 1, name: 'Motorola Edge 50 Pro (Black, 256 GB)', price: 29999, original_price: 35999,
-        rating: 4.3, review_count: 15432,
-        description: 'World\'s first AI-powered pro-grade camera with 125W TurboPower charging.',
-        stock: 60,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600']),
-        specs: JSON.stringify({ 'Display': '6.7" OLED', 'Processor': 'SD 7 Gen 3', 'RAM': '12 GB' })
-    },
-    {
-        category_id: 1, name: 'Realme 12 Pro+ 5G (Submarine Blue, 256 GB)', price: 26999, original_price: 32999,
-        rating: 4.2, review_count: 22100,
-        description: 'Mastershot periscope camera with a premium watch-inspired luxury design.',
-        stock: 80,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1592890288564-76628a30a657?w=600']),
-        specs: JSON.stringify({ 'Display': '6.7" Curved OLED', 'RAM': '12 GB', 'Storage': '256 GB' })
-    },
+    // --- Mobiles (Category 1) ---
+    { category_id: 1, name: 'Samsung Galaxy S24 Ultra 5G (Titanium Black, 256 GB)', price: 109999, original_price: 134999, rating: 4.5, review_count: 12453, description: 'Flagship AI Features', stock: 50, images: JSON.stringify(['https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600']), specs: JSON.stringify({}) },
+    { category_id: 1, name: 'Apple iPhone 15 Pro (Natural Titanium, 128 GB)', price: 124999, original_price: 134900, rating: 4.6, review_count: 5231, description: 'Forged in Titanium', stock: 30, images: JSON.stringify(['https://images.unsplash.com/photo-1696446701796-da61225697cc?w=600']), specs: JSON.stringify({}) },
+    { category_id: 1, name: 'Google Pixel 8 (Hazel, 128 GB)', price: 59999, original_price: 75999, rating: 4.4, review_count: 8234, description: 'Best Camera AI', stock: 30, images: JSON.stringify(['https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600']), specs: JSON.stringify({}) },
+    { category_id: 1, name: 'OnePlus 12 (Silky Black, 512 GB)', price: 64999, original_price: 69999, rating: 4.5, review_count: 8900, description: 'Smooth Beyond Belief', stock: 40, images: JSON.stringify(['https://images.unsplash.com/photo-1601784551446-20c9e07cdbab?w=600']), specs: JSON.stringify({}) },
+    { category_id: 1, name: 'Nothing Phone (2a) (Milk, 128 GB)', price: 23999, original_price: 25999, rating: 4.4, review_count: 15432, description: 'Unique Glyph UI', stock: 100, images: JSON.stringify(['https://images.unsplash.com/photo-1678911820864-e2c567c655d7?w=600']), specs: JSON.stringify({}) },
 
-    // Fashion (Category 2)
-    {
-        category_id: 2, name: 'Men Solly Multi Check Pure Cotton Shirt', price: 999, original_price: 2499,
-        rating: 4.1, review_count: 5678,
-        description: 'Formal checks for a professional and sharp appearance at the workplace.',
-        stock: 120,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600']),
-        specs: JSON.stringify({ 'Material': '100% Cotton', 'Fit': 'Regular', 'Sleeve': 'Full' })
-    },
-    {
-        category_id: 2, name: 'Women Printed Rayon Anarkali Kurta (Yellow)', price: 599, original_price: 1999,
-        rating: 4.3, review_count: 12450,
-        description: 'Beautiful ethnic wear for festivals and casual outings with comfortable rayon fabric.',
-        stock: 150,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600']),
-        specs: JSON.stringify({ 'Material': 'Rayon', 'Pattern': 'Floral Print', 'Length': 'Calf Length' })
-    },
-    {
-        category_id: 2, name: 'Levi\'s Men\'s Skinny Fit Jeans (Blue)', price: 1599, original_price: 3299,
-        rating: 4.2, review_count: 8932,
-        description: 'Classic Levi\'s skinny fit for a modern and stylish silhouette.',
-        stock: 90,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1542272604-787c3835535d?w=600']),
-        specs: JSON.stringify({ 'Fit': 'Skinny', 'Material': 'Cotton Blend', 'Stretchable': 'Yes' })
-    },
-    {
-        category_id: 2, name: 'Nike Revolution 6 Running Shoes', price: 2495, original_price: 3695,
-        rating: 4.4, review_count: 15678,
-        description: 'Lightweight running shoes with cushioned foam for a comfortable ride.',
-        stock: 55,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600']),
-        specs: JSON.stringify({ 'Activity': 'Running', 'Breathable': 'Yes', 'Sole': 'Rubber' })
-    },
+    // --- Fashion (Category 2) ---
+    { category_id: 2, name: 'Men Solly Multi Check Pure Cotton Shirt', price: 999, original_price: 2499, rating: 4.1, review_count: 5678, description: 'Formal Elegance', stock: 120, images: JSON.stringify(['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Women Printed Rayon Anarkali Kurta (Yellow)', price: 599, original_price: 1999, rating: 4.3, review_count: 12450, description: 'Ethnic Charm', stock: 150, images: JSON.stringify(['https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Levi\'s Men\'s Skinny Fit Jeans (Blue)', price: 1599, original_price: 3299, rating: 4.2, review_count: 8932, description: 'Classic Denim', stock: 90, images: JSON.stringify(['https://images.unsplash.com/photo-1542272604-787c3835535d?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Nike Revolution 6 Running Shoes', price: 2495, original_price: 3695, rating: 4.4, review_count: 15678, description: 'Everyday Versatility', stock: 55, images: JSON.stringify(['https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Puma Men\'s Graphic T-shirt', price: 799, original_price: 1499, rating: 4.1, review_count: 3120, description: 'Sporty Style', stock: 200, images: JSON.stringify(['https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'U.S. Polo Assn. Men\'s Polo T-shirt', price: 1299, original_price: 2199, rating: 4.3, review_count: 8900, description: 'Timeless Polo', stock: 75, images: JSON.stringify(['https://images.unsplash.com/photo-1586363104862-3a5e2ca60cd3?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'W Women\'s Printed Straight Kurta', price: 899, original_price: 1899, rating: 4.2, review_count: 5672, description: 'Modern Ethnic', stock: 90, images: JSON.stringify(['https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Allen Solly Men\'s Formal Blazer', price: 3499, original_price: 5999, rating: 4.4, review_count: 1245, description: 'Sharp Profile', stock: 25, images: JSON.stringify(['https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Vero Moda Women\'s High Rise Trousers', price: 1499, original_price: 2999, rating: 4.3, review_count: 3120, description: 'Sleek Fit', stock: 60, images: JSON.stringify(['https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=600']), specs: JSON.stringify({}) },
 
-    // Electronics (Category 3)
-    {
-        category_id: 3, name: 'MacBook Air M2 (8GB RAM, 256GB SSD, Silver)', price: 89990, original_price: 114900,
-        rating: 4.8, review_count: 5231,
-        description: 'Strikingly thin design with extraordinary speed and power of the M2 chip.',
-        stock: 25,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600']),
-        specs: JSON.stringify({ 'Processor': 'Apple M2', 'RAM': '8 GB', 'Storage': '256 GB SSD' })
-    },
-    {
-        category_id: 3, name: 'Sony WH-1000XM5 Wireless Noise Cancelling Headphones', price: 24990, original_price: 34990,
-        rating: 4.6, review_count: 3123,
-        description: 'Industry-leading noise cancellation with auto NC optimizer.',
-        stock: 40,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600']),
-        specs: JSON.stringify({ 'Battery': '30 hrs', 'Charging': 'USB-C', 'Microphone': 'Built-in' })
-    },
-    {
-        category_id: 3, name: 'ASUS ROG Zephyrus G14 Gaming Laptop', price: 124990, original_price: 159990,
-        rating: 4.7, review_count: 1245,
-        description: 'Powerful gaming laptop with Ryzen 9 and RTX 4060 in a compact 14-inch frame.',
-        stock: 15,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1544244015-0cd4b3ffc6b0?w=600']),
-        specs: JSON.stringify({ 'CPU': 'Ryzen 9', 'GPU': 'RTX 4060', 'RAM': '16 GB' })
-    },
-    {
-        category_id: 3, name: 'Samsung 27 inch Full HD LED IPS Panel Monitor', price: 12499, original_price: 21999,
-        rating: 4.4, review_count: 8234,
-        description: 'Slim design with AMD FreeSync and Game Mode for an improved gaming experience.',
-        stock: 35,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1547119957-630f9c475d3d?w=600']),
-        specs: JSON.stringify({ 'Size': '27 inch', 'Panel': 'IPS', 'Refresh': '75Hz' })
-    },
+    // --- Electronics (Category 3) ---
+    { category_id: 3, name: 'MacBook Air M2 (8GB RAM, 256GB SSD, Silver)', price: 89990, original_price: 114900, rating: 4.8, review_count: 5231, description: 'Power of M2', stock: 25, images: JSON.stringify(['https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'Sony WH-1000XM5 Wireless Headphones', price: 24990, original_price: 34990, rating: 4.6, review_count: 3123, description: 'Pure Sound NC', stock: 40, images: JSON.stringify(['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'Apple iPad Air (5th Gen) WiFi 64GB', price: 54999, original_price: 59900, rating: 4.7, review_count: 8234, description: 'Light. Bright. Powerful.', stock: 35, images: JSON.stringify(['https://images.unsplash.com/photo-1544244015-0cd4b3ffc6b0?w=600']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'Logitech G502 HERO Gaming Mouse', price: 3999, original_price: 5495, rating: 4.7, review_count: 15678, description: 'High Performance Gaming', stock: 100, images: JSON.stringify(['https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=600']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'Dell UltraSharp 27 4K USB-C Hub Monitor', price: 42999, original_price: 55000, rating: 4.5, review_count: 2310, description: 'Refined Visuals', stock: 20, images: JSON.stringify(['https://images.unsplash.com/photo-1547119957-630f9c475d3d?w=600']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'Bose Companion 2 Series III Speakers', price: 11990, original_price: 14990, rating: 4.6, review_count: 8900, description: 'Rich Stereophonic Sound', stock: 45, images: JSON.stringify(['https://images.unsplash.com/photo-1545454675-3531b543be5d?w=600']), specs: JSON.stringify({}) },
 
-    // Sports & Fitness (Category 5)
-    {
-        category_id: 5, name: 'Yonex Astrox 88S Play Carbon Fiber Badminton Racket', price: 3499, original_price: 5299,
-        rating: 4.4, review_count: 1245,
-        description: 'Lead the attack with increased power and control. Perfect for intermediate players.',
-        stock: 40,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=600']),
-        specs: JSON.stringify({ 'Material': 'Carbon Fiber', 'Balance': 'Head Heavy', 'Weight': '4U (83g)' })
-    },
-    {
-        category_id: 5, name: 'Boldfit Heavy Duty Adjustable Dumbbells Set (10kg)', price: 2999, original_price: 4999,
-        rating: 4.3, review_count: 5672,
-        description: 'Adjustable weights for a complete home workout. Durable and ergonomic design.',
-        stock: 50,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600']),
-        specs: JSON.stringify({ 'Weight': '10kg', 'Material': 'Cast Iron', 'Coating': 'Rubber' })
-    },
-    {
-        category_id: 5, name: 'Decathlon Kiprun KS900 Running Shoes', price: 4499, original_price: 7999,
-        rating: 4.5, review_count: 3120,
-        description: 'High-performance running shoes with superior cushioning and grip.',
-        stock: 30,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600']),
-        specs: JSON.stringify({ 'Type': 'Running', 'Cushioning': 'High', 'Surface': 'Road' })
-    },
-    {
-        category_id: 5, name: 'Nivea Football Size 5 (Yellow/Blue)', price: 649, original_price: 1199,
-        rating: 4.2, review_count: 8900,
-        description: 'Durable stitched football for all-weather play on grass or turf.',
-        stock: 100,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1614632537423-1e6c2e7a0aab?w=600']),
-        specs: JSON.stringify({ 'Size': '5', 'Material': 'PU', 'Stitching': 'Machine' })
-    },
+    // --- Home (Category 4) ---
+    { category_id: 4, name: 'Sleepyhead Flip - Dual Sided Mattress', price: 6999, original_price: 11999, rating: 4.3, review_count: 4231, description: 'Hard & Soft Foam', stock: 45, images: JSON.stringify(['https://images.unsplash.com/photo-1505691938895-1758d7eaa511?w=600']), specs: JSON.stringify({}) },
+    { category_id: 4, name: 'Prestige IRIS Plus Mixer Grinder', price: 3499, original_price: 5499, rating: 4.4, review_count: 18234, description: 'Powerful Grinding', stock: 65, images: JSON.stringify(['https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=600']), specs: JSON.stringify({}) },
+    { category_id: 4, name: 'Milton Thermosteel Flip Lid Flask', price: 899, original_price: 1299, rating: 4.5, review_count: 32100, description: 'Hot & Cold 24h', stock: 200, images: JSON.stringify(['https://images.unsplash.com/photo-1622467827417-bbe2237067a9?w=600']), specs: JSON.stringify({}) },
+    { category_id: 4, name: 'Kent Ultra Storage Water Purifier', price: 7999, original_price: 9500, rating: 4.3, review_count: 12450, description: 'UV Power', stock: 50, images: JSON.stringify(['https://images.unsplash.com/photo-1585832770481-e25fa1265881?w=600']), specs: JSON.stringify({}) },
+    { category_id: 4, name: 'Solimo Solid Wood Queen Bed', price: 18999, original_price: 25999, rating: 4.2, review_count: 5678, description: 'Sturdy & Elegant', stock: 15, images: JSON.stringify(['https://images.unsplash.com/photo-1505693413171-293669746a57?w=600']), specs: JSON.stringify({}) },
 
-    // Beauty (More)
-    {
-        category_id: 6, name: 'Maybelline New York Colossal Kajal (Black)', price: 179, original_price: 299,
-        rating: 4.5, review_count: 124500,
-        description: '24-hour smudge-proof and waterproof kajal for deep black eyes.',
-        stock: 500,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1631214500115-598fc2cb882e?w=600']),
-        specs: JSON.stringify({ 'Color': 'Deep Black', 'Duration': '24 hrs', 'Type': 'Pencil' })
-    },
-    {
-        category_id: 6, name: 'Nivea Soft Light Moisturiser 200ml', price: 299, original_price: 499,
-        rating: 4.6, review_count: 56789,
-        description: 'Non-greasy, fast-absorbing moisturiser for soft and supple skin.',
-        stock: 300,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600']),
-        specs: JSON.stringify({ 'Volume': '200ml', 'Texture': 'Light', 'Skin': 'All' })
-    },
-    {
-        category_id: 6, name: 'Philips HP8100/46 Hair Dryer (Purple)', price: 849, original_price: 1295,
-        rating: 4.3, review_count: 15432,
-        description: 'Compact and powerful hair dryer with 1000W for quick drying.',
-        stock: 150,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=600']),
-        specs: JSON.stringify({ 'Power': '1000W', 'Speeds': '2', 'Compact': 'Yes' })
-    },
+    // --- Appliances (Category 5) ---
+    { category_id: 5, name: 'Samsung 7 kg Front Load Washing Machine', price: 29990, original_price: 36900, rating: 4.5, review_count: 12450, description: 'AI Control', stock: 35, images: JSON.stringify(['https://images.unsplash.com/photo-1582733775066-1c2966524329?w=600']), specs: JSON.stringify({}) },
+    { category_id: 5, name: 'LG 242 L Double Door Refrigerator', price: 25990, original_price: 33999, rating: 4.3, review_count: 31200, description: 'Door Cooling+', stock: 20, images: JSON.stringify(['https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600']), specs: JSON.stringify({}) },
+    { category_id: 5, name: 'Sony Bravia 55 inch 4K Ultra HD TV', price: 57990, original_price: 99900, rating: 4.7, review_count: 15432, description: 'Google TV', stock: 15, images: JSON.stringify(['https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=600']), specs: JSON.stringify({}) },
+    { category_id: 5, name: 'Panasonic 1.5 Ton 5 Star Inverter AC', price: 36990, original_price: 54990, rating: 4.4, review_count: 8234, description: 'Smart & Fast', stock: 40, images: JSON.stringify(['https://images.unsplash.com/photo-1591154665851-979b76856b3e?w=600']), specs: JSON.stringify({}) },
+    { category_id: 5, name: 'Havells Instanio 3-Litre Instant Geyser', price: 3299, original_price: 5299, rating: 4.2, review_count: 23100, description: 'Ready in Seconds', stock: 80, images: JSON.stringify(['https://images.unsplash.com/photo-1585832770481-e25fa1265881?w=600']), specs: JSON.stringify({}) },
 
-    // Home & Kitchen (Category 4)
-    {
-        category_id: 4, name: 'Prestige IRIS Plus 750 Watt Mixer Grinder', price: 3499, original_price: 5499,
-        rating: 4.4, review_count: 18234,
-        description: 'Powerful 750W motor with 3 stainless steel jars and 1 juicer jar.',
-        stock: 65,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1570222094114-d054a817e56b?w=600']),
-        specs: JSON.stringify({ 'Power': '750W', 'Jars': '4', 'Warranty': '2 Years' })
-    },
-    {
-        category_id: 4, name: 'Sleepyhead Flip - Dual Sided Foam Mattress', price: 6999, original_price: 11999,
-        rating: 4.3, review_count: 4231,
-        description: 'Dual-sided mattress with hard and soft foams for personalized comfort.',
-        stock: 45,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1505691938895-1758d7eaa511?w=600']),
-        specs: JSON.stringify({ 'Type': 'Foam', 'Size': 'Single/Double', 'Duo-Sided': 'Yes' })
-    },
-    {
-        category_id: 4, name: 'Milton Thermosteel Flip Lid Flask 1000ml', price: 899, original_price: 1299,
-        rating: 4.5, review_count: 32100,
-        description: 'Vacuum insulated flask that keeps drinks hot or cold for 24 hours.',
-        stock: 200,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1622467827417-bbe2237067a9?w=600']),
-        specs: JSON.stringify({ 'Capacity': '1000ml', 'Material': 'Steel', 'Duration': '24 hrs' })
-    },
+    // --- Beauty (Category 6) ---
+    { category_id: 6, name: 'Maybelline New York Colossal Kajal', price: 179, original_price: 299, rating: 4.5, review_count: 124500, description: 'Smudge-proof', stock: 500, images: JSON.stringify(['https://images.unsplash.com/photo-1631214500115-598fc2cb882e?w=600']), specs: JSON.stringify({}) },
+    { category_id: 6, name: 'Nivea Soft Light Moisturiser 200ml', price: 299, original_price: 499, rating: 4.6, review_count: 56789, description: 'Light Care', stock: 300, images: JSON.stringify(['https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600']), specs: JSON.stringify({}) },
+    { category_id: 6, name: 'Philips HP8100/46 Hair Dryer', price: 849, original_price: 1295, rating: 4.3, review_count: 15432, description: 'Quick Drying', stock: 150, images: JSON.stringify(['https://images.unsplash.com/photo-1522338242992-e1a54906a8da?w=600']), specs: JSON.stringify({}) },
+    { category_id: 6, name: 'Lakme Absolute Skin Gloss Gel', price: 649, original_price: 899, rating: 4.2, review_count: 8900, description: 'Glowing Finish', stock: 120, images: JSON.stringify(['https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600']), specs: JSON.stringify({}) },
+    { category_id: 6, name: 'Biotique Bio Kelp Protein Shampoo', price: 249, original_price: 399, rating: 4.4, review_count: 23100, description: 'Pure Herbs', stock: 200, images: JSON.stringify(['https://images.unsplash.com/photo-1535585209827-a15dcdbc4c2d?w=600']), specs: JSON.stringify({}) },
 
-    // Books (Category 5)
-    {
-        category_id: 5, name: 'Atomic Habits by James Clear', price: 449, original_price: 699,
-        rating: 4.8, review_count: 89234,
-        description: 'Tiny changes, remarkable results. Build good habits and break bad ones.',
-        stock: 300,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600']),
-        specs: JSON.stringify({ 'Author': 'James Clear', 'Format': 'Paperback', 'Genre': 'Self-Help' })
-    },
-    {
-        category_id: 5, name: 'Deep Work by Cal Newport', price: 399, original_price: 599,
-        rating: 4.6, review_count: 12432,
-        description: 'Rules for focused success in a distracted world.',
-        stock: 150,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1543004218-ee141104975a?w=600']),
-        specs: JSON.stringify({ 'Author': 'Cal Newport', 'Format': 'Hardcover', 'Genre': 'Productivity' })
-    },
+    // --- Toys (Category 7) ---
+    { category_id: 7, name: 'Millennium Falcon LEGO Set', price: 14999, original_price: 18999, rating: 4.9, review_count: 1245, description: 'Star Wars Build', stock: 10, images: JSON.stringify(['https://images.unsplash.com/photo-1585366119957-e556da2347bd?w=600']), specs: JSON.stringify({}) },
+    { category_id: 7, name: 'Hot Wheels 10-Car Gift Pack', price: 1099, original_price: 1499, rating: 4.6, review_count: 8932, description: 'Die-cast Collection', stock: 100, images: JSON.stringify(['https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=600']), specs: JSON.stringify({}) },
+    { category_id: 7, name: 'Rubiks Cube 3x3 Classic', price: 499, original_price: 799, rating: 4.7, review_count: 56789, description: 'Smart Play', stock: 300, images: JSON.stringify(['https://images.unsplash.com/photo-1591994843349-2e84113fd054?w=600']), specs: JSON.stringify({}) },
+    { category_id: 7, name: 'Barbie Dreamhouse Playset', price: 4999, original_price: 6999, rating: 4.8, review_count: 3120, description: '360-Degree Play', stock: 15, images: JSON.stringify(['https://images.unsplash.com/photo-1558877385-81a1c7e67d72?w=600']), specs: JSON.stringify({}) },
+    { category_id: 7, name: 'Fisher-Price Rock-a-Stack', price: 349, original_price: 499, rating: 4.7, review_count: 5678, description: 'Classic Infant Toy', stock: 200, images: JSON.stringify(['https://images.unsplash.com/photo-1532330393533-443990a51d10?w=600']), specs: JSON.stringify({}) },
 
-    // Beauty (Category 6)
-    {
-        category_id: 6, name: 'Lakme Absolute Matte Liquid Lip Color', price: 429, original_price: 649,
-        rating: 4.1, review_count: 18432,
-        description: 'Transfer-proof matte finish for long-lasting vibrant lips.',
-        stock: 200,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1583241475880-083f84372725?w=600']),
-        specs: JSON.stringify({ 'Finish': 'Matte', 'Duration': '12 hrs', 'Type': 'Liquid' })
-    },
-    {
-        category_id: 6, name: 'Neutrogena Hydro Boost Water Gel', price: 950, original_price: 1250,
-        rating: 4.4, review_count: 5678,
-        description: 'Hydrating water gel with hyaluronic acid for supple and hydrated skin.',
-        stock: 80,
-        images: JSON.stringify(['https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600']),
-        specs: JSON.stringify({ 'Ingredients': 'Hyaluronic Acid', 'Skin Type': 'All', 'Weight': '50g' })
-    },
+    // --- More Fashion ---
+    { category_id: 2, name: 'Ray-Ban Aviator Sunglasses', price: 8499, original_price: 10499, rating: 4.6, review_count: 1245, description: 'Iconic Style', stock: 30, images: JSON.stringify(['https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Titan Karishma Men\'s Watch', price: 1899, original_price: 2499, rating: 4.4, review_count: 8932, description: 'Formal Elegance', stock: 50, images: JSON.stringify(['https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Fastrack Unisex Square Sunglasses', price: 699, original_price: 1299, rating: 4.1, review_count: 15432, description: 'Cool & Affordable', stock: 120, images: JSON.stringify(['https://images.unsplash.com/photo-1511499767323-91bc2224426d?w=600']), specs: JSON.stringify({}) },
+
+    // --- More Beauty ---
+    { category_id: 6, name: 'MAC Prep + Prime Fix+', price: 2150, original_price: 2500, rating: 4.7, review_count: 12450, description: 'Hydrating Mist', stock: 45, images: JSON.stringify(['https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?w=600']), specs: JSON.stringify({}) },
+    { category_id: 6, name: 'The Body Shop Tea Tree Oil', price: 695, original_price: 845, rating: 4.5, review_count: 8923, description: 'Target Blemishes', stock: 60, images: JSON.stringify(['https://images.unsplash.com/photo-1556228578-180ba3d0016e?w=600']), specs: JSON.stringify({}) },
+
+    // --- More Home ---
+    { category_id: 4, name: 'Eveready 9W LED Bulbs (Pack of 10)', price: 899, original_price: 1499, rating: 4.4, review_count: 23100, description: 'Bright & Efficient', stock: 500, images: JSON.stringify(['https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600']), specs: JSON.stringify({}) },
+    { category_id: 4, name: 'Cello H2O Stainless Steel Bottle', price: 449, original_price: 699, rating: 4.3, review_count: 12432, description: 'Durable & Sleek', stock: 150, images: JSON.stringify(['https://images.unsplash.com/photo-1622467827417-bbe2237067a9?w=600']), specs: JSON.stringify({}) },
+
+    // --- More Electronics ---
+    { category_id: 3, name: 'Canon EOS R6 Mark II Mirrorless Camera', price: 219990, original_price: 243995, rating: 4.8, review_count: 320, description: 'Master the Art', stock: 8, images: JSON.stringify(['https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=600']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'HP Pavilion 15 (16GB RAM, 512GB SSD)', price: 62990, original_price: 75000, rating: 4.3, review_count: 5678, description: 'Work & Play', stock: 40, images: JSON.stringify(['https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600']), specs: JSON.stringify({}) },
+
+    // --- More Appliances ---
+    { category_id: 5, name: 'Dyson V11 Absolute Cord-Free Vacuum', price: 49900, original_price: 55900, rating: 4.7, review_count: 1245, description: 'Deep Clean Everywhere', stock: 15, images: JSON.stringify(['https://images.unsplash.com/photo-1558317374-067fb5f30001?w=600']), specs: JSON.stringify({}) },
+    { category_id: 5, name: 'Philips 4.1L Digital Air Fryer', price: 8499, original_price: 11995, rating: 4.5, review_count: 8932, description: 'Healthy Frying', stock: 65, images: JSON.stringify(['https://images.unsplash.com/photo-1585832770481-e25fa1265881?w=600']), specs: JSON.stringify({}) },
+    { category_id: 5, name: 'Bajaj New Shakti Neo 15L Water Heater', price: 5999, original_price: 9550, rating: 4.3, review_count: 15432, description: 'Hot Water Instantly', stock: 50, images: JSON.stringify(['https://images.unsplash.com/photo-1585832770481-e25fa1265881?w=600']), specs: JSON.stringify({}) },
+
+    // --- More Home ---
+    { category_id: 4, name: 'Urban Ladder Solid Wood Coffee Table', price: 4499, original_price: 7999, rating: 4.4, review_count: 3120, description: 'Chic Living', stock: 20, images: JSON.stringify(['https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=600']), specs: JSON.stringify({}) },
+    { category_id: 4, name: 'Prestige 3.0L Induction Cooktop', price: 2199, original_price: 3495, rating: 4.2, review_count: 23100, description: 'Safe & Smart Cooking', stock: 100, images: JSON.stringify(['https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=600']), specs: JSON.stringify({}) },
 ];
 
-const existingCategories = db.prepare('SELECT COUNT(*) as count FROM categories').get();
-const existingProducts = db.prepare('SELECT COUNT(*) as count FROM products').get();
+// Re-run the insertions
+db.transaction(() => {
+    db.prepare('DELETE FROM order_items').run();
+    db.prepare('DELETE FROM orders').run();
+    db.prepare('DELETE FROM cart').run();
+    db.prepare('DELETE FROM products').run();
+    db.prepare('DELETE FROM categories').run();
 
-if (existingCategories.count === 0 || existingProducts.count < products.length) {
-    db.transaction(() => {
-        // Clear to ensure fresh start with the expanded list
-        db.prepare('DELETE FROM order_items').run();
-        db.prepare('DELETE FROM orders').run();
-        db.prepare('DELETE FROM cart').run();
-        db.prepare('DELETE FROM products').run();
-        db.prepare('DELETE FROM categories').run();
+    const insertCategory = db.prepare('INSERT INTO categories (id, name, icon) VALUES (?, ?, ?)');
+    const insertProduct = db.prepare(`
+        INSERT INTO products (category_id, name, description, price, original_price, discount_percent, rating, review_count, stock, images, specs)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
 
-        const insertCategory = db.prepare('INSERT INTO categories (id, name, icon) VALUES (?, ?, ?)');
-        const insertProduct = db.prepare(`
-            INSERT INTO products (category_id, name, description, price, original_price, discount_percent, rating, review_count, stock, images, specs)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `);
+    for (const cat of categories) {
+        insertCategory.run(cat.id, cat.name, cat.icon);
+    }
+    for (const p of products) {
+        const discount = Math.round(((p.original_price - p.price) / p.original_price) * 100);
+        insertProduct.run(p.category_id, p.name, p.description, p.price, p.original_price, discount, p.rating, p.review_count, p.stock, p.images, p.specs);
+    }
+})();
 
-        for (const cat of categories) {
-            insertCategory.run(cat.id, cat.name, cat.icon);
-        }
-        for (const p of products) {
-            const discount = Math.round(((p.original_price - p.price) / p.original_price) * 100);
-            insertProduct.run(p.category_id, p.name, p.description, p.price, p.original_price, discount, p.rating, p.review_count, p.stock, p.images, p.specs);
-        }
-    })();
-    console.log(`✅ Seeded ${categories.length} categories and ${products.length} products.`);
-} else {
-    console.log('ℹ️  Database already seeded, skipping.');
-}
+console.log(`✅ Seeded ${categories.length} categories and ${products.length} products.`);

@@ -1,32 +1,48 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
-import { fetchCart } from '@/lib/api';
+import { useState, useEffect, useCallback } from 'react';
+import { fetchCart, getCurrentUser, logout } from '@/lib/api';
+import LoginModal from './LoginModal';
 
 export default function Navbar() {
     const searchParams = useSearchParams();
     const search = searchParams.get('search') || '';
     const [cartCount, setCartCount] = useState(0);
+    const [user, setUser] = useState(null);
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-    const loadCartCount = async () => {
+    const loadData = useCallback(async () => {
         try {
-            const cart = await fetchCart();
-            setCartCount(cart.length);
+            const cartItems = await fetchCart();
+            // Handle both array and object response structures
+            const count = cartItems.items ? cartItems.items.length : (Array.isArray(cartItems) ? cartItems.length : 0);
+            setCartCount(count);
+            setUser(getCurrentUser());
         } catch (error) {
-            console.error('Error loading cart count:', error);
+            console.error('Error loading navbar data:', error);
         }
-    };
+    }, []);
 
     useEffect(() => {
-        loadCartCount();
-        const interval = setInterval(loadCartCount, 5000);
-        return () => clearInterval(interval);
-    }, []);
+        loadData();
+        window.addEventListener('cart-updated', loadData);
+        window.addEventListener('user-updated', loadData);
+        const interval = setInterval(loadData, 10000);
+        return () => {
+            window.removeEventListener('cart-updated', loadData);
+            window.removeEventListener('user-updated', loadData);
+            clearInterval(interval);
+        };
+    }, [loadData]);
+
+    const handleLogout = () => {
+        logout();
+        setUser(null);
+    };
 
     return (
         <header>
-            {/* Top Bar with Pills */}
             <div className="header-top">
                 <div className="pill-container">
                     <button className="pill pill-fk">
@@ -41,10 +57,8 @@ export default function Navbar() {
                 </div>
             </div>
 
-            {/* Main Navbar */}
             <nav className="navbar">
                 <div className="navbar-inner">
-                    {/* Logo */}
                     <Link href="/" className="navbar-logo-new">
                         <img
                             src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-444a75.svg"
@@ -53,7 +67,6 @@ export default function Navbar() {
                         />
                     </Link>
 
-                    {/* Search */}
                     <form className="navbar-search" action="/">
                         <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                         <input
@@ -64,11 +77,28 @@ export default function Navbar() {
                         />
                     </form>
 
-                    {/* Actions */}
                     <div className="navbar-actions">
-                        <div className="nav-item">
-                            <span style={{ background: '#2874f0', color: 'white', padding: '6px 16px', borderRadius: '4px', fontWeight: '600' }}>Login ⌵</span>
-                        </div>
+                        {user ? (
+                            <div className="nav-item user-dropdown-container" style={{ position: 'relative' }}>
+                                <span style={{ background: '#2874f0', color: 'white', padding: '6px 16px', borderRadius: '4px', fontWeight: '600', cursor: 'pointer' }}>
+                                    {user.name.split(' ')[0]} ⌵
+                                </span>
+                                <div className="user-dropdown">
+                                    <Link href="/orders">Orders</Link>
+                                    <button onClick={handleLogout}>Logout</button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="nav-item">
+                                <span
+                                    onClick={() => setIsLoginModalOpen(true)}
+                                    style={{ background: '#2874f0', color: 'white', padding: '6px 16px', borderRadius: '4px', fontWeight: '600', cursor: 'pointer' }}
+                                >
+                                    Login
+                                </span>
+                            </div>
+                        )}
+
                         <Link href="/cart" className="nav-item" style={{ position: 'relative' }}>
                             <span>🛒</span> Cart
                             {cartCount > 0 && (
@@ -83,6 +113,11 @@ export default function Navbar() {
                     </div>
                 </div>
             </nav>
+
+            <LoginModal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+            />
         </header>
     );
 }

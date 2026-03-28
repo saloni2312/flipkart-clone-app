@@ -33,7 +33,10 @@ export async function addToCart(productId, quantity = 1) {
         body: JSON.stringify({ productId, quantity }),
     });
     if (!res.ok) throw new Error('Failed to add to cart');
-    return res.json();
+    const data = await res.json();
+    // Dispatch event for real-time navbar update
+    window.dispatchEvent(new CustomEvent('cart-updated'));
+    return data;
 }
 
 export async function updateCartItem(id, quantity) {
@@ -49,7 +52,9 @@ export async function updateCartItem(id, quantity) {
 export async function removeCartItem(id) {
     const res = await fetch(`${API_BASE}/cart/${id}`, { method: 'DELETE' });
     if (!res.ok) throw new Error('Failed to remove from cart');
-    return res.json();
+    const data = await res.json();
+    window.dispatchEvent(new CustomEvent('cart-updated'));
+    return data;
 }
 
 export async function placeOrder(shippingAddress) {
@@ -75,6 +80,43 @@ export async function fetchOrder(id) {
     const res = await fetch(`${API_BASE}/orders/${id}`);
     if (!res.ok) throw new Error('Order not found');
     return res.json();
+}
+
+export async function login(email, password) {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Login failed');
+    localStorage.setItem('user', JSON.stringify(data.user));
+    window.dispatchEvent(new CustomEvent('user-updated'));
+    return data;
+}
+
+export async function register(name, email, password) {
+    const res = await fetch(`${API_BASE}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error || 'Registration failed');
+    localStorage.setItem('user', JSON.stringify(data.user));
+    window.dispatchEvent(new CustomEvent('user-updated'));
+    return data;
+}
+
+export function logout() {
+    localStorage.removeItem('user');
+    window.dispatchEvent(new CustomEvent('user-updated'));
+}
+
+export function getCurrentUser() {
+    if (typeof window === 'undefined') return null;
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
 }
 
 export function formatPrice(price) {
