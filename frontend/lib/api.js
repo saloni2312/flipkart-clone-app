@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://flipkart-clone-app-production.up.railway.app';
 const API_BASE = API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`;
 
 export async function fetchProducts(params = {}) {
