@@ -21,7 +21,7 @@ export default function RootLayout({ children }) {
                 <footer className="footer">
                     <div className="footer-inner">
                         <div className="footer-col">
-                            <h3>About</h3>
+                            <h4>About</h4>
                             <ul>
                                 <li><a href="#">Contact Us</a></li>
                                 <li><a href="#">About Us</a></li>
@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
                             </ul>
                         </div>
                         <div className="footer-col">
-                            <h3>Help</h3>
+                            <h4>Help</h4>
                             <ul>
                                 <li><a href="#">Payments</a></li>
                                 <li><a href="#">Shipping</a></li>
@@ -39,7 +39,7 @@ export default function RootLayout({ children }) {
                             </ul>
                         </div>
                         <div className="footer-col">
-                            <h3>Policy</h3>
+                            <h4>Policy</h4>
                             <ul>
                                 <li><a href="#">Return Policy</a></li>
                                 <li><a href="#">Terms Of Use</a></li>
@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
                             </ul>
                         </div>
                         <div className="footer-col">
-                            <h3>Social</h3>
+                            <h4>Social</h4>
                             <ul>
                                 <li><a href="#">Facebook</a></li>
                                 <li><a href="#">Twitter</a></li>
@@ -57,13 +57,13 @@ export default function RootLayout({ children }) {
                         </div>
                     </div>
                     <div className="footer-bottom">
-                        <div>
-                            <span>Become a Seller</span>
-                            <span>Advertise</span>
-                            <span>Gift Cards</span>
-                            <span>Help Center</span>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', marginBottom: '15px' }}>
+                            <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '13px' }}>Become a Seller</a>
+                            <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '13px' }}>Advertise</a>
+                            <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '13px' }}>Gift Cards</a>
+                            <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '13px' }}>Help Center</a>
                         </div>
-                        <span>© 2024 Flipkart Clone. All rights reserved.</span>
+                        <p style={{ opacity: 0.8 }}>© 2024 Flipkart Clone. All rights reserved.</p>
                     </div>
                 </footer>
             </body>

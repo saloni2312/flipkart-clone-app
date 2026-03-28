@@ -217,12 +217,86 @@ const products = [
         specs: JSON.stringify({ 'Type': 'Blaster', 'Darts': '12 included', 'Range': '27m' })
     },
     {
-        category_id: 7, name: 'Hot Wheels 10-Car Gift Pack Multipack', price: 1099, original_price: 1499,
-        rating: 4.6, review_count: 8932,
-        description: 'Hot Wheels 10-car packs deliver ten of the coolest 1:64 scale die-cast vehicles.',
-        stock: 200,
+        category_id: 7, name: 'Barbie Dreamhouse 2024 Edition with 75+ Accessories', price: 6999, original_price: 8999,
+        rating: 4.8, review_count: 5231,
+        description: 'New Barbie Dreamhouse features 10 play areas, customizable lights and sounds.',
+        stock: 15,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/81L6z7v4YpL._SX679_.jpg']),
+        specs: JSON.stringify({ 'Pieces': '75+', 'Age': '3+', 'Theme': 'Barbie' })
+    },
+
+    // --- More Mobiles ---
+    {
+        category_id: 1, name: 'Asus ROG Phone 8 Pro (Phantom Black, 16GB RAM)', price: 94999, original_price: 104990,
+        rating: 4.7, review_count: 523,
+        description: 'The ultimate gaming phone with Snapdragon 8 Gen 3 and 165Hz AMOLED display.',
+        stock: 10,
         images: JSON.stringify(['https://m.media-amazon.com/images/I/71RVuS3q9pL._SX679_.jpg']),
-        specs: JSON.stringify({ 'Scale': '1:64', 'Cars': '10' })
+        specs: JSON.stringify({ 'Refresh Rate': '165Hz', 'Battery': '5500 mAh' })
+    },
+    {
+        category_id: 1, name: 'Realme 12 Pro+ 5G (Submarine Blue, 256 GB)', price: 29999, original_price: 34999,
+        rating: 4.3, review_count: 8923,
+        description: 'Mastershot Periscope Camera for professional-level photography.',
+        stock: 50,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/81m6mFkP-8L._SX679_.jpg']),
+        specs: JSON.stringify({ 'Camera': '64MP Periscope', 'Display': 'Curved OLED' })
+    },
+
+    // --- More Fashion ---
+    {
+        category_id: 2, name: 'Tommy Hilfiger Men\'s Essential Crew Neck T-Shirt', price: 2199, original_price: 3499,
+        rating: 4.4, review_count: 1245,
+        description: 'Premium cotton t-shirt for everyday luxury.',
+        stock: 60,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/71NnU6A0GFL._SY879_.jpg']),
+        specs: JSON.stringify({ 'Material': 'Organic Cotton' })
+    },
+    {
+        category_id: 2, name: 'Adidas Originals Men\'s Superstar Sneakers', price: 7999, original_price: 9999,
+        rating: 4.7, review_count: 31200,
+        description: 'The timeless classic. Adidas Superstar with the iconic shell toe.',
+        stock: 35,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/71S6SjC1DQL._SX695_.jpg']),
+        specs: JSON.stringify({ 'Sole': 'Rubber', 'Material': 'Leather' })
+    },
+
+    // --- More Electronics ---
+    {
+        category_id: 3, name: 'Bose QuietComfort Ultra Noise Cancelling Headphones', price: 34990, original_price: 39900,
+        rating: 4.7, review_count: 1245,
+        description: 'World-class noise cancellation. Bose Immersive Audio for a life-like listening experience.',
+        stock: 25,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/61X-H+V5fRL._SX679_.jpg']),
+        specs: JSON.stringify({ 'Battery': '24 Hours', 'Type': 'Over-ear' })
+    },
+    {
+        category_id: 3, name: 'Nikon Z8 Mirrorless Camera (Body Only)', price: 329000, original_price: 359000,
+        rating: 4.9, review_count: 124,
+        description: 'Professional high-resolution camera with 8K video capabilities.',
+        stock: 5,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/51H+uFqN9oL._SX679_.jpg']),
+        specs: JSON.stringify({ 'Sensor': '45.7MP Full Frame', 'Video': '8K/60p' })
+    },
+
+    // --- More Home ---
+    {
+        category_id: 4, name: 'Philips Hue Smart Bridge and Light Strip Kit', price: 8999, original_price: 11995,
+        rating: 4.5, review_count: 5678,
+        description: 'Transform your home lighting with millions of colors and smart controls.',
+        stock: 40,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/81I6nU9mD6L._SX679_.jpg']),
+        specs: JSON.stringify({ 'Colors': '16 Million', 'Connectivity': 'Zigbee/Bluetooth' })
+    },
+
+    // --- More Appliances ---
+    {
+        category_id: 5, name: 'Philips 800 Series Air Purifier with HEPA Filter', price: 7999, original_price: 10995,
+        rating: 4.4, review_count: 12432,
+        description: 'Removes 99.9% of viruses and aerosols from the air.',
+        stock: 80,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/618S4Y6T9yL._SX679_.jpg']),
+        specs: JSON.stringify({ 'Filter': 'HEPA', 'CADR': '190 m³/h' })
     },
 ];
 
