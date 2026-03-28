@@ -4,7 +4,15 @@ import { formatPrice } from '@/lib/api';
 import { addItemToCart } from '@/lib/cartStore';
 
 export default function ProductCard({ product }) {
-    const firstImage = Array.isArray(product.images) ? product.images[0] : JSON.parse(product.images || '[]')[0];
+    let firstImage = 'https://via.placeholder.com/200x200?text=No+Image';
+    try {
+        const images = Array.isArray(product.images) ? product.images : JSON.parse(product.images || '[]');
+        if (images && images.length > 0) {
+            firstImage = images[0];
+        }
+    } catch (e) {
+        console.error('Image parse error', e);
+    }
 
     const handleQuickAdd = (e) => {
         e.preventDefault();
@@ -26,12 +34,18 @@ export default function ProductCard({ product }) {
                 {product.discount_percent > 0 && (
                     <span className="discount-badge">{product.discount_percent}% off</span>
                 )}
-                <img
-                    src={firstImage}
-                    alt={product.name}
-                    className="product-card-img"
-                    onError={e => { e.target.src = 'https://via.placeholder.com/200x200?text=No+Image'; }}
-                />
+                <div className="product-card-img-container">
+                    <img
+                        src={firstImage}
+                        alt={product.name}
+                        className="product-card-img"
+                        loading="lazy"
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://via.placeholder.com/200x200?text=Image+Unavailable';
+                        }}
+                    />
+                </div>
                 <p className="product-card-name">{product.name}</p>
                 <div className="product-card-rating">
                     <span className="rating-badge">

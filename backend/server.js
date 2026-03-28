@@ -4,7 +4,7 @@ const db = require('./db'); // Initialize DB schema
 require('./seed'); // Seed if empty
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Allow all origins — Railway backend is public, Vercel frontend URL is dynamic
 app.use(cors());

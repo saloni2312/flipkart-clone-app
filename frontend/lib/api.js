@@ -1,4 +1,5 @@
-let rawUrl = process.env.NEXT_PUBLIC_API_URL || 'https://flipkart-clone-app-production.up.railway.app';
+const isDev = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+let rawUrl = process.env.NEXT_PUBLIC_API_URL || (isDev ? 'http://localhost:5001' : 'https://flipkart-clone-app-production.up.railway.app');
 
 // Ensure protocol is present
 if (rawUrl && !rawUrl.startsWith('http')) {
