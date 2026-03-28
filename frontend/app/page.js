@@ -68,12 +68,16 @@ function ProductListingContent() {
                 </div>
             </div>
 
-            <div className="page-container" style={{ paddingTop: '8px', paddingBottom: '24px' }}>
-                {/* Results info */}
-                <div className="results-info">
-                    {search && <><span>"{search}"</span> — </>}
-                    {activeCategory && <><span>{activeCategory.name}</span> — </>}
-                    Showing <span>{total}</span> product{total !== 1 ? 's' : ''}
+            <div className="page-container" style={{ paddingBottom: '24px' }}>
+                {/* Banner */}
+                <div className="home-banner">
+                    <img src="/banner.png" alt="Big Billion Days Banner" />
+                </div>
+
+                {/* Section Header */}
+                <div className="section-header">
+                    <h2>Best of Electronics</h2>
+                    <button className="btn btn-primary" style={{ width: 'auto', padding: '8px 20px' }}>View All</button>
                 </div>
 
                 {/* Products */}
