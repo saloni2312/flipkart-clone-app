@@ -1,4 +1,11 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://flipkart-clone-app-production.up.railway.app';
+let rawUrl = process.env.NEXT_PUBLIC_API_URL || 'https://flipkart-clone-app-production.up.railway.app';
+
+// Ensure protocol is present
+if (rawUrl && !rawUrl.startsWith('http')) {
+    rawUrl = `https://${rawUrl}`;
+}
+
+export const API_URL = rawUrl;
 export const API_BASE = API_URL.endsWith('/api') ? API_URL : `${API_URL}/api`;
 
 export async function ping() {
