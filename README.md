@@ -18,9 +18,12 @@ A fully functional Flipkart-clone e-commerce web application built as an SDE Int
 - ✅ **Product Detail Page** — Image carousel with thumbnails, specs table, stock status, Add to Cart & Buy Now
 - ✅ **Shopping Cart** — Quantity controls (+/−), remove items, price breakdown (subtotal, discount, delivery)
 - ✅ **Order Placement** — Checkout with address form + validation, order summary sidebar, order confirmation with ID
+- ✅ **Authentication** — Full login/signup functionality with high-fidelity modals
 
 ### Bonus Features
 - ✅ **Order History** — View all past orders with status, items, and delivery address
+- ✅ **75+ Products** — Richly populated catalog across 12 categories
+- ✅ **Themed Sections** — Home Decor & Furnishing, Brands in Spotlight, and Premium Spotlight sections
 - ✅ **Responsive Design** — Works on mobile (2-col grid), tablet (3-col), and desktop (4-col)
 - ✅ **Skeleton Loading** — Shimmer effect while data loads
 
@@ -65,8 +68,8 @@ order_items   — id, order_id, product_id, product_name, product_image,
                 quantity, price_at_purchase
 ```
 
-**Seed data:** 22 products across 6 categories:
-`Electronics`, `Fashion`, `Home & Kitchen`, `Books`, `Sports & Fitness`, `Beauty`
+**Seed data:** 74 products across 12 categories:
+`Mobiles`, `Fashion`, `Electronics`, `Home`, `Appliances`, `Beauty`, `Toys`, `Furniture`, `Sports`, `Books`, `Household`, `Auto Acc`
 
 ## 🚀 Setup & Running
 
@@ -117,12 +120,26 @@ npm run dev
 4. **Cart persists** in the SQLite database (server-side, not localStorage)
 5. **Stock decrements** on order placement and is enforced at checkout
 
-## 🖥 UI Design
+## 🚀 Deployment
 
-The app closely replicates Flipkart's design patterns:
-- Blue navbar (`#2874f0`) with search bar + cart badge
-- Category strip with emoji icons
-- 4-column product grid with discount badges
-- Green rating badges, strikethrough original prices
-- Orange "Add to Cart" + orange-red "Buy Now" buttons
-- Price summary card with savings highlighted in green
+The project is configured for **Vercel** (Frontend) and **Railway** (Backend).
+
+### 1. Push Changes to GitHub
+```bash
+git add .
+git commit -m "UI Overhaul: 75+ products, Themed Decor, and Branded Ads"
+git push origin main
+```
+
+### 2. Manual Redploy (Optional)
+Pushing to `main` will trigger automatic builds on Vercel and Railway.
+
+---
+
+## 💡 Key Design Refinements
+The app closely replicates the modern Flipkart experience:
+- **Blue Navbar** (`#2874f0`) & **Deep Navy Footer** (`#172337`).
+- **Horizontal Spotlight** with soft warm gradients.
+- **Branded Ads Gallery** for New Balance, Campus, and Reebok.
+- **Home Decor Themed Section** with soft purple/blue background.
+- **Flipkart Assured** badges and verified green ratings.
