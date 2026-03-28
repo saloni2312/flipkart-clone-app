@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { getCart } from '@/lib/api';
+import { fetchCart } from '@/lib/api';
 
 export default function Navbar() {
     const searchParams = useSearchParams();
@@ -11,7 +11,7 @@ export default function Navbar() {
 
     const loadCartCount = async () => {
         try {
-            const cart = await getCart();
+            const cart = await fetchCart();
             setCartCount(cart.length);
         } catch (error) {
             console.error('Error loading cart count:', error);
