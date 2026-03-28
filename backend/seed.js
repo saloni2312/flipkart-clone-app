@@ -1,12 +1,12 @@
 const db = require('./db');
 
 const categories = [
-    { name: 'Electronics', icon: '📱' },
-    { name: 'Fashion', icon: '👗' },
-    { name: 'Home & Kitchen', icon: '🏠' },
-    { name: 'Books', icon: '📚' },
-    { name: 'Sports & Fitness', icon: '⚽' },
-    { name: 'Beauty', icon: '💄' },
+    { id: 1, name: 'Electronics', icon: '📱' },
+    { id: 2, name: 'Fashion', icon: '👗' },
+    { id: 3, name: 'Home & Kitchen', icon: '🏠' },
+    { id: 4, name: 'Books', icon: '📚' },
+    { id: 5, name: 'Sports & Fitness', icon: '⚽' },
+    { id: 6, name: 'Beauty', icon: '💄' },
 ];
 
 const products = [
@@ -195,24 +195,31 @@ const products = [
 ];
 
 const existingCategories = db.prepare('SELECT COUNT(*) as count FROM categories').get();
-if (existingCategories.count === 0) {
-    const insertCategory = db.prepare('INSERT INTO categories (name, icon) VALUES (?, ?)');
-    const insertProduct = db.prepare(`
-    INSERT INTO products (category_id, name, description, price, original_price, discount_percent, rating, review_count, stock, images, specs)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
+const existingProducts = db.prepare('SELECT COUNT(*) as count FROM products').get();
 
-    const seedAll = db.transaction(() => {
+if (existingCategories.count === 0 || existingProducts.count === 0) {
+    db.transaction(() => {
+        // Clear both to ensure IDs stay consistent with the seed data
+        db.prepare('DELETE FROM order_items').run();
+        db.prepare('DELETE FROM orders').run();
+        db.prepare('DELETE FROM cart').run();
+        db.prepare('DELETE FROM products').run();
+        db.prepare('DELETE FROM categories').run();
+
+        const insertCategory = db.prepare('INSERT INTO categories (id, name, icon) VALUES (?, ?, ?)');
+        const insertProduct = db.prepare(`
+            INSERT INTO products (category_id, name, description, price, original_price, discount_percent, rating, review_count, stock, images, specs)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `);
+
         for (const cat of categories) {
-            insertCategory.run(cat.name, cat.icon);
+            insertCategory.run(cat.id, cat.name, cat.icon);
         }
         for (const p of products) {
             const discount = Math.round(((p.original_price - p.price) / p.original_price) * 100);
             insertProduct.run(p.category_id, p.name, p.description, p.price, p.original_price, discount, p.rating, p.review_count, p.stock, p.images, p.specs);
         }
-    });
-
-    seedAll();
+    })();
     console.log(`✅ Seeded ${categories.length} categories and ${products.length} products.`);
 } else {
     console.log('ℹ️  Database already seeded, skipping.');
