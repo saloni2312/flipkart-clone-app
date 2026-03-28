@@ -846,6 +846,36 @@ img {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+.product-card-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.quick-add-btn {
+  background: #ff9f00;
+  color: white;
+  border: none;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 0 0 4px 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.quick-add-btn:hover {
+  background: #f39300;
+}
+
+.quick-add-btn:active {
+  transform: scale(0.98);
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
