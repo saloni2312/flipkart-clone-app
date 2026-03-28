@@ -74,13 +74,6 @@ function ProductListingContent() {
                     <img src="/banner.png" alt="Big Billion Days Banner" />
                 </div>
 
-                {/* Section Header */}
-                <div className="section-header">
-                    <h2>Best of Electronics</h2>
-                    <button className="btn btn-primary" style={{ width: 'auto', padding: '8px 20px' }}>View All</button>
-                </div>
-
-                {/* Products */}
                 {loading ? (
                     <div className="products-grid">
                         {Array.from({ length: 12 }).map((_, i) => (
@@ -91,19 +84,49 @@ function ProductListingContent() {
                             </div>
                         ))}
                     </div>
-                ) : products.length === 0 ? (
-                    <div className="empty-state" style={{ marginTop: '16px' }}>
-                        <div className="empty-state-icon">🔍</div>
-                        <h3>No products found</h3>
-                        <p>Try a different search or category</p>
-                        <button className="btn btn-primary" style={{ width: 'auto', padding: '10px 24px' }} onClick={() => router.push('/')}>
-                            View All Products
-                        </button>
-                    </div>
+                ) : (search || category) ? (
+                    <>
+                        <div className="results-info">
+                            {search && <><span>"{search}"</span> — </>}
+                            {activeCategory && <><span>{activeCategory.name}</span> — </>}
+                            Showing <span>{total}</span> product{total !== 1 ? 's' : ''}
+                        </div>
+                        {products.length === 0 ? (
+                            <div className="empty-state" style={{ marginTop: '16px' }}>
+                                <div className="empty-state-icon">🔍</div>
+                                <h3>No products found</h3>
+                                <p>Try a different search or category</p>
+                                <button className="btn btn-primary" style={{ width: 'auto', padding: '10px 24px' }} onClick={() => router.push('/')}>
+                                    View All Products
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="products-grid">
+                                {products.map(p => <ProductCard key={p.id} product={p} />)}
+                            </div>
+                        )}
+                    </>
                 ) : (
-                    <div className="products-grid">
-                        {products.map(p => <ProductCard key={p.id} product={p} />)}
-                    </div>
+                    <>
+                        {/* Multi-Section View */}
+                        {categories.map(cat => {
+                            const catProducts = products.filter(p => p.category_id === cat.id).slice(0, 4);
+                            if (catProducts.length === 0) return null;
+                            return (
+                                <div key={cat.id} className="product-section">
+                                    <div className="section-header">
+                                        <h2>{cat.name}</h2>
+                                        <button className="btn btn-primary" style={{ width: 'auto', padding: '8px 20px' }} onClick={() => setCategory(cat.id)}>
+                                            View All
+                                        </button>
+                                    </div>
+                                    <div className="products-grid">
+                                        {catProducts.map(p => <ProductCard key={p.id} product={p} />)}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </>
                 )}
             </div>
         </div>

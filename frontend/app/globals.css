@@ -377,14 +377,35 @@ img {
 /* DISCOUNT BADGE on cards */
 .discount-badge {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
+  right: 10px;
   background: #ff6161;
   color: white;
   font-size: 10px;
   font-weight: 700;
   padding: 2px 6px;
-  border-radius: 0 0 4px 0;
+  border-radius: 4px;
+}
+
+.fk-assured {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #2874f0;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.fk-assured span {
+  display: inline-block;
+  background: #fb641b;
+  color: white;
+  padding: 0 4px;
+  border-radius: 2px;
+  font-size: 8px;
+  margin-left: 2px;
 }
 
 /* BUTTONS */

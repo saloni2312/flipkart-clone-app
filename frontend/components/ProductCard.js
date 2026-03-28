@@ -22,6 +22,9 @@ export default function ProductCard({ product }) {
                     {product.rating} ★
                 </span>
                 <span className="rating-count">({product.review_count.toLocaleString('en-IN')})</span>
+                <span className="fk-assured">
+                    Assured<span>✔</span>
+                </span>
             </div>
             <div className="product-card-price">
                 <span className="price-current">{formatPrice(product.price)}</span>
