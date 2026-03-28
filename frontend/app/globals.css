@@ -1011,30 +1011,115 @@ img {
   display: block;
 }
 
+/* FOOTER (Professional Deep Navy) */
+.footer {
+  background: #172337;
+  color: #fff;
+  padding: 60px 0 30px;
+  margin-top: 80px;
+  border-top: 1px solid #454d5e;
+}
+
+.footer-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  padding: 0 40px;
+}
+
+.footer-col h4 {
+  color: #878787;
+  font-size: 13px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col li {
+  margin-bottom: 10px;
+}
+
+.footer-col a {
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.footer-col a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  margin-top: 60px;
+  padding-top: 25px;
+  border-top: 1px solid #454d5e;
+  text-align: center;
+  font-size: 12px;
+  color: #fff;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* SPOTLIGHT SECTION REFINEMENT */
 .spotlight-section {
-  background: #fb6a8c;
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  /* Soft warm gradient */
   border-radius: 12px;
-  margin-top: 24px;
-  padding: 24px;
+  margin-top: 40px;
+  padding: 30px;
+  min-height: 450px;
 }
 
 .spotlight-header {
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding-bottom: 16px;
 }
 
 .spotlight-header h2 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.spotlight-header p {
+  font-size: 16px;
+  opacity: 0.9;
 }
 
 .spotlight-section .products-grid {
-  background: transparent;
-  box-shadow: none;
+  display: flex;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 10px 0;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.5) transparent;
+}
+
+.spotlight-section .products-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.spotlight-section .products-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
 }
 
 .spotlight-section .product-card {
+  min-width: 220px;
+  background: white;
   border-radius: 8px;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* LOGIN MODAL (High-Fidelity) */
