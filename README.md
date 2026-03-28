@@ -1,5 +1,7 @@
 # Flipkart Clone — Fullstack E-Commerce Platform
 
+![Flipkart Clone Screenshot](docs/screenshot.png)
+
 A fully functional Flipkart-clone e-commerce web application built as an SDE Intern Fullstack Assignment.
 
 ## 🛠 Tech Stack
