@@ -183,6 +183,25 @@ const products = [
         specs: JSON.stringify({ 'Skin Type': 'All', 'Weight': '200ml', 'Key Ingredient': 'Vitamin E' })
     },
     {
+        category_id: 5, name: 'Bajaj New Shakti Neo 15L Water Heater', price: 5999, original_price: 9550,
+        rating: 4.3, review_count: 15432,
+        description: 'Hot Water Instantly', stock: 50,
+        images: JSON.stringify(['https://m.media-amazon.com/images/I/51H+uFqN9oL._SX679_.jpg']),
+        specs: JSON.stringify({})
+    },
+    // --- Final Batch for 50+ ---
+    { category_id: 1, name: 'Google Pixel 8 Pro (Bay, 128 GB)', price: 99999, original_price: 106999, rating: 4.6, review_count: 1245, description: 'The most advanced Pixel yet.', stock: 20, images: JSON.stringify(['https://m.media-amazon.com/images/I/71RVuS3q9pL._SX679_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 1, name: 'Samsung Galaxy Z Fold5 (Icy Blue, 256 GB)', price: 154999, original_price: 164999, rating: 4.5, review_count: 823, description: 'The ultimate foldable power.', stock: 15, images: JSON.stringify(['https://m.media-amazon.com/images/I/717QX7shLpL._SX679_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Puma Men\'s Smashic Sneakers', price: 1999, original_price: 4499, rating: 4.2, review_count: 15672, description: 'Classic tennis inspired style.', stock: 100, images: JSON.stringify(['https://m.media-amazon.com/images/I/71S6SjC1DQL._SX695_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 2, name: 'Levis Men\'s 511 Slim Fit Jeans', price: 2299, original_price: 3999, rating: 4.3, review_count: 8932, description: 'Modern slim fit with room to move.', stock: 50, images: JSON.stringify(['https://m.media-amazon.com/images/I/61Nl0uQvXHL._SY879_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'Microsoft Surface Laptop 5', price: 92990, original_price: 107990, rating: 4.4, review_count: 1245, description: 'Sleek and portable with Dolby Vision.', stock: 30, images: JSON.stringify(['https://m.media-amazon.com/images/I/496181133206-80ce9b88a853?w=600']), specs: JSON.stringify({}) },
+    { category_id: 3, name: 'Sony PlayStation 5 Console (Disc Edition)', price: 54990, original_price: 54990, rating: 4.8, review_count: 15678, description: 'Experience lightning-fast loading.', stock: 50, images: JSON.stringify(['https://m.media-amazon.com/images/I/619BfSasUuL._SX679_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 4, name: 'Prestige IRIS Plus 750 Watt Mixer Grinder', price: 3499, original_price: 5499, rating: 4.4, review_count: 18234, description: 'Powerful grinding for all your needs.', stock: 100, images: JSON.stringify(['https://m.media-amazon.com/images/I/7178uP7VnJL._SY879_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 5, name: 'LG 8 kg 5 Star Front Load Washing Machine', price: 34990, original_price: 42990, rating: 4.6, review_count: 12450, description: 'AI Direct Drive for superior care.', stock: 25, images: JSON.stringify(['https://m.media-amazon.com/images/I/71RVuS3q9pL._SX679_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 6, name: 'Mamaearth Onion Hair Fall Shampoo', price: 349, original_price: 499, rating: 4.3, review_count: 156789, description: 'Reduces hair fall and promotes growth.', stock: 500, images: JSON.stringify(['https://m.media-amazon.com/images/I/61WfQfNfS9L._SX679_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 7, name: 'Catan Board Game Classic Edition', price: 2999, original_price: 3999, rating: 4.8, review_count: 3120, description: 'The legendary strategy game.', stock: 40, images: JSON.stringify(['https://m.media-amazon.com/images/I/81I6nU9mD6L._SX679_.jpg']), specs: JSON.stringify({}) },
+    { category_id: 7, name: 'LEGO Architecture Statue of Liberty', price: 8999, original_price: 11999, rating: 4.9, review_count: 1245, description: 'Celebrate a monumental icon.', stock: 15, images: JSON.stringify(['https://m.media-amazon.com/images/I/81L6z7v4YpL._SX679_.jpg']), specs: JSON.stringify({}) },
+    {
         category_id: 6, name: 'Philips HP8100/46 Hair Dryer (Purple)', price: 849, original_price: 1295,
         rating: 4.3, review_count: 15432,
         description: 'Compact design for easy handling. 1000W for gentle drying.',
