@@ -111,15 +111,67 @@ function ProductListingContent() {
                                 <h2>Spotlight's On</h2>
                                 <p>Top picks for you today</p>
                             </div>
-                            <div className="products-grid">
+                            <div className="products-grid" style={{ flexWrap: 'nowrap', overflowX: 'auto', paddingBottom: '10px' }}>
                                 {products.slice(0, 10).map(p => <ProductCard key={p.id} product={p} />)}
                             </div>
                         </div>
 
-                        {/* Standard Sections */}
+                        {/* Brands in Spotlight (Screenshot Style) */}
+                        <div className="branded-spotlight">
+                            <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px' }}>Brands in Spotlight</h2>
+                            <div className="branded-spotlight-grid">
+                                <div className="brand-ad-card">
+                                    <img src="/nb_shoes_ad.png" alt="NB Shoes" />
+                                    <div className="brand-ad-info">
+                                        <p className="offer">Min 45% Off</p>
+                                        <p className="desc">Stability and comfort</p>
+                                    </div>
+                                </div>
+                                <div className="brand-ad-card">
+                                    <img src="/campus_shoes_ad.png" alt="Campus Shoes" />
+                                    <div className="brand-ad-info">
+                                        <p className="offer">Min 50% Off</p>
+                                        <p className="desc">Trendy sneakers</p>
+                                    </div>
+                                </div>
+                                <div className="brand-ad-card">
+                                    <img src="/reebok_shoes_ad.png" alt="Reebok Shoes" />
+                                    <div className="brand-ad-info">
+                                        <p className="offer">Min 50% Off</p>
+                                        <p className="desc">Official gym shoes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Themed Category Sections */}
                         {categories.map(cat => {
-                            const catProducts = products.filter(p => p.category_id === cat.id).slice(0, 4);
+                            const catProducts = products.filter(p => p.category_id === cat.id).slice(0, 8);
                             if (catProducts.length === 0) return null;
+
+                            // Special style for Home (Category 4) - Blueish background from screenshot
+                            if (cat.id === 4) {
+                                return (
+                                    <div key={cat.id} className="themed-section purple">
+                                        <div className="themed-section-header">
+                                            <h2>Home Decor & Furnishing</h2>
+                                            <button className="btn btn-secondary" style={{ padding: '6px 16px', fontSize: '12px' }} onClick={() => setCategory(cat.id)}>
+                                                →
+                                            </button>
+                                        </div>
+                                        <div className="themed-scroll-row">
+                                            {catProducts.map(p => (
+                                                <a href={`/product/${p.id}`} key={p.id} className="themed-product-tile">
+                                                    <img src={JSON.parse(p.images || '[]')[0]} alt={p.name} />
+                                                    <p>{p.name.split(' ').slice(0, 3).join(' ')}</p>
+                                                    <p className="offer">Special offer</p>
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                );
+                            }
+
                             return (
                                 <div key={cat.id} className="product-section" style={{ marginTop: '24px' }}>
                                     <div className="section-header">
@@ -128,7 +180,7 @@ function ProductListingContent() {
                                             View All
                                         </button>
                                     </div>
-                                    <div className="products-grid" style={{ background: 'white', padding: '16px', borderRadius: '0 0 12px 12px' }}>
+                                    <div className="products-grid" style={{ background: 'white', padding: '16px', borderRadius: '0 0 12px 12px', flexWrap: 'nowrap', overflowX: 'auto' }}>
                                         {catProducts.map(p => <ProductCard key={p.id} product={p} />)}
                                     </div>
                                 </div>
