@@ -45,34 +45,42 @@ function ProductListingContent() {
 
     return (
         <div>
-            {/* Category Bar */}
+            {/* High-Fidelity Category Bar */}
             <div className="category-bar">
-                <div className="category-bar-inner">
-                    <button
-                        className={`cat-item ${!category ? 'active' : ''}`}
-                        onClick={() => setCategory('')}
-                    >
-                        <span className="cat-icon">🏬</span>
-                        All
-                    </button>
+                <div className="page-container" style={{ display: 'flex', justifyContent: 'center', gap: '8px', overflowX: 'auto' }}>
                     {categories.map(cat => (
                         <button
                             key={cat.id}
                             className={`cat-item ${category === String(cat.id) ? 'active' : ''}`}
-                            onClick={() => setCategory(cat.id)}
+                            onClick={() => setCategory(String(cat.id) === category ? '' : cat.id)}
+                            style={{ border: 'none', background: 'none', cursor: 'pointer' }}
                         >
-                            <span className="cat-icon">{cat.icon}</span>
-                            {cat.name}
+                            <div className="cat-icon-circle">{cat.icon}</div>
+                            <span className="cat-name">{cat.name}</span>
                         </button>
                     ))}
                 </div>
             </div>
 
-            <div className="page-container" style={{ paddingBottom: '24px' }}>
-                {/* Banner */}
-                <div className="home-banner">
-                    <img src="/banner.png" alt="Big Billion Days Banner" />
-                </div>
+            <div className="page-container" style={{ paddingBottom: '40px' }}>
+                {/* 3-Column Banner Grid */}
+                {!category && !search && (
+                    <div className="home-banner-grid">
+                        <div className="banner-item"><img src="/banner_fridge.png" alt="Fridge Sale" /></div>
+                        <div className="banner-item"><img src="/banner_aqua.png" alt="Aqua Sale" /></div>
+                        <div className="banner-item"><img src="/banner_daikin.png" alt="AC Sale" /></div>
+                    </div>
+                )}
+
+                {/* Hot Pick Section */}
+                {!category && !search && (
+                    <div className="hot-pick-section">
+                        <p style={{ textAlign: 'left', fontSize: '12px', color: '#878787', marginBottom: '8px', fontWeight: '600' }}>Today's Hot Pick</p>
+                        <div className="hot-pick-banner">
+                            <img src="/banner_nothing.png" alt="Nothing Phone 2a" />
+                        </div>
+                    </div>
+                )}
 
                 {loading ? (
                     <div className="products-grid">
@@ -91,36 +99,36 @@ function ProductListingContent() {
                             {activeCategory && <><span>{activeCategory.name}</span> — </>}
                             Showing <span>{total}</span> product{total !== 1 ? 's' : ''}
                         </div>
-                        {products.length === 0 ? (
-                            <div className="empty-state" style={{ marginTop: '16px' }}>
-                                <div className="empty-state-icon">🔍</div>
-                                <h3>No products found</h3>
-                                <p>Try a different search or category</p>
-                                <button className="btn btn-primary" style={{ width: 'auto', padding: '10px 24px' }} onClick={() => router.push('/')}>
-                                    View All Products
-                                </button>
-                            </div>
-                        ) : (
-                            <div className="products-grid">
-                                {products.map(p => <ProductCard key={p.id} product={p} />)}
-                            </div>
-                        )}
+                        <div className="products-grid">
+                            {products.map(p => <ProductCard key={p.id} product={p} />)}
+                        </div>
                     </>
                 ) : (
                     <>
-                        {/* Multi-Section View */}
+                        {/* Spotlight Section (Red) */}
+                        <div className="spotlight-section">
+                            <div className="spotlight-header">
+                                <h2>Spotlight's On</h2>
+                                <p>Top picks for you today</p>
+                            </div>
+                            <div className="products-grid">
+                                {products.slice(0, 10).map(p => <ProductCard key={p.id} product={p} />)}
+                            </div>
+                        </div>
+
+                        {/* Standard Sections */}
                         {categories.map(cat => {
                             const catProducts = products.filter(p => p.category_id === cat.id).slice(0, 4);
                             if (catProducts.length === 0) return null;
                             return (
-                                <div key={cat.id} className="product-section">
+                                <div key={cat.id} className="product-section" style={{ marginTop: '24px' }}>
                                     <div className="section-header">
                                         <h2>{cat.name}</h2>
-                                        <button className="btn btn-primary" style={{ width: 'auto', padding: '8px 20px' }} onClick={() => setCategory(cat.id)}>
+                                        <button className="btn btn-primary" style={{ width: 'auto', padding: '8px 20px', borderRadius: '4px' }} onClick={() => setCategory(cat.id)}>
                                             View All
                                         </button>
                                     </div>
-                                    <div className="products-grid">
+                                    <div className="products-grid" style={{ background: 'white', padding: '16px', borderRadius: '0 0 12px 12px' }}>
                                         {catProducts.map(p => <ProductCard key={p.id} product={p} />)}
                                     </div>
                                 </div>

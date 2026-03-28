@@ -1,68 +1,88 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { fetchCart } from '@/lib/api';
+import { useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { getCart } from '@/lib/api';
 
 export default function Navbar() {
-    const router = useRouter();
     const searchParams = useSearchParams();
-    const [search, setSearch] = useState(searchParams.get('search') || '');
+    const search = searchParams.get('search') || '';
     const [cartCount, setCartCount] = useState(0);
 
-    const loadCartCount = useCallback(async () => {
+    const loadCartCount = async () => {
         try {
-            const data = await fetchCart();
-            setCartCount(data.items.reduce((s, i) => s + i.quantity, 0));
-        } catch { setCartCount(0); }
-    }, []);
+            const cart = await getCart();
+            setCartCount(cart.length);
+        } catch (error) {
+            console.error('Error loading cart count:', error);
+        }
+    };
 
     useEffect(() => {
         loadCartCount();
-        const interval = setInterval(loadCartCount, 3000);
+        const interval = setInterval(loadCartCount, 5000);
         return () => clearInterval(interval);
-    }, [loadCartCount]);
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        const params = new URLSearchParams();
-        if (search) params.set('search', search);
-        router.push(`/?${params.toString()}`);
-    };
+    }, []);
 
     return (
-        <nav className="navbar">
-            <div className="navbar-inner">
-                <Link href="/" className="navbar-logo">
-                    <span>Flipkart</span>
-                    <span className="tagline">Explore <span style={{ fontStyle: 'normal' }}>Plus</span> ✦</span>
-                </Link>
-
-                <form className="navbar-search" onSubmit={handleSearch}>
-                    <input
-                        type="text"
-                        placeholder="Search for products, brands and more"
-                        value={search}
-                        onChange={e => setSearch(e.target.value)}
-                    />
-                    <button type="submit" className="navbar-search-btn">
-                        🔍
+        <header>
+            {/* Top Bar with Pills */}
+            <div className="header-top">
+                <div className="pill-container">
+                    <button className="pill pill-fk">
+                        <span>🛒</span> Flipkart
                     </button>
-                </form>
-
-                <div className="navbar-actions">
-                    <Link href="/orders" className="navbar-btn">
-                        📦 Orders
-                    </Link>
-                    <Link href="/cart" className="navbar-btn">
-                        <div className="cart-badge">
-                            🛒
-                            {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
-                        </div>
-                        Cart
-                    </Link>
+                    <button className="pill pill-travel">
+                        <span>✈️</span> Travel
+                    </button>
+                </div>
+                <div className="location-selector">
+                    📍 Location not set <span style={{ color: '#2874f0', fontWeight: '600', cursor: 'pointer', marginLeft: '4px' }}>Select delivery location &gt;</span>
                 </div>
             </div>
-        </nav>
+
+            {/* Main Navbar */}
+            <nav className="navbar">
+                <div className="navbar-inner">
+                    {/* Logo */}
+                    <Link href="/" className="navbar-logo-new">
+                        <img
+                            src="https://static-assets-web.flixcart.com/batman-returns/batman-returns/p/images/fkheaderlogo_exploreplus-444a75.svg"
+                            alt="Flipkart"
+                            style={{ height: '40px' }}
+                        />
+                    </Link>
+
+                    {/* Search */}
+                    <form className="navbar-search" action="/">
+                        <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Search for Products, Brands and More"
+                            defaultValue={search}
+                        />
+                    </form>
+
+                    {/* Actions */}
+                    <div className="navbar-actions">
+                        <div className="nav-item">
+                            <span style={{ background: '#2874f0', color: 'white', padding: '6px 16px', borderRadius: '4px', fontWeight: '600' }}>Login ⌵</span>
+                        </div>
+                        <Link href="/cart" className="nav-item" style={{ position: 'relative' }}>
+                            <span>🛒</span> Cart
+                            {cartCount > 0 && (
+                                <span style={{ position: 'absolute', top: '0', right: '-4px', background: '#ff6161', color: 'white', fontSize: '10px', padding: '0 4px', borderRadius: '10px' }}>
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
+                        <div className="nav-item">
+                            <span>┇</span> More ⌵
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
     );
 }
