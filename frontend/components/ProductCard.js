@@ -1,20 +1,23 @@
 'use client';
 import Link from 'next/link';
-import { formatPrice, addToCart } from '@/lib/api';
+import { formatPrice } from '@/lib/api';
+import { addItemToCart } from '@/lib/cartStore';
 
 export default function ProductCard({ product }) {
     const firstImage = Array.isArray(product.images) ? product.images[0] : JSON.parse(product.images || '[]')[0];
 
-    const handleQuickAdd = async (e) => {
+    const handleQuickAdd = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        try {
-            await addToCart(product.id);
-            alert(`✅ ${product.name} added to cart!`);
-        } catch (error) {
-            console.error(error);
-            alert(`❌ Failed to add to cart: ${error.message}\nMake sure your backend is running.`);
-        }
+        addItemToCart(product);
+        // Show a brief visual feedback
+        const btn = e.currentTarget;
+        btn.textContent = '✅ Added!';
+        btn.style.background = '#388e3c';
+        setTimeout(() => {
+            btn.textContent = 'Add to Cart';
+            btn.style.background = '';
+        }, 1200);
     };
 
     return (

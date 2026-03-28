@@ -2,47 +2,34 @@
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { fetchCart, updateCartItem, removeCartItem, formatPrice } from '@/lib/api';
+import { formatPrice } from '@/lib/api';
+import { getCartSummary, updateItemQuantity, removeItemFromCart } from '@/lib/cartStore';
 
 export default function CartPage() {
     const router = useRouter();
     const [cart, setCart] = useState({ items: [], subtotal: 0, discount: 0, delivery: 0, total: 0 });
-    const [loading, setLoading] = useState(true);
-    const [updating, setUpdating] = useState(null);
 
-    const loadCart = useCallback(async () => {
-        try {
-            const data = await fetchCart();
-            setCart(data);
-        } catch (e) { console.error(e); }
-        finally { setLoading(false); }
+    const loadCart = useCallback(() => {
+        setCart(getCartSummary());
     }, []);
 
-    useEffect(() => { loadCart(); }, [loadCart]);
+    useEffect(() => {
+        loadCart();
+        window.addEventListener('cart-updated', loadCart);
+        return () => window.removeEventListener('cart-updated', loadCart);
+    }, [loadCart]);
 
-    const updateQty = async (item, delta) => {
+    const updateQty = (productId, delta) => {
+        const item = cart.items.find(i => i.productId === productId);
+        if (!item) return;
         const newQty = item.quantity + delta;
         if (newQty < 1) return;
-        setUpdating(item.id);
-        try {
-            await updateCartItem(item.id, newQty);
-            await loadCart();
-        } finally { setUpdating(null); }
+        updateItemQuantity(productId, newQty);
     };
 
-    const removeItem = async (itemId) => {
-        setUpdating(itemId);
-        try {
-            await removeCartItem(itemId);
-            await loadCart();
-        } finally { setUpdating(null); }
+    const removeItem = (productId) => {
+        removeItemFromCart(productId);
     };
-
-    if (loading) return (
-        <div className="page-container" style={{ paddingTop: 24 }}>
-            <div className="skeleton" style={{ height: 200, borderRadius: 4 }} />
-        </div>
-    );
 
     if (cart.items.length === 0) return (
         <div className="page-container" style={{ paddingTop: 24 }}>
@@ -72,17 +59,17 @@ export default function CartPage() {
                     </div>
 
                     {cart.items.map(item => (
-                        <div key={item.id} className={`cart-item ${updating === item.id ? 'opacity-50' : ''}`} style={{ opacity: updating === item.id ? 0.6 : 1 }}>
-                            <Link href={`/product/${item.product_id}`}>
+                        <div key={item.productId} className="cart-item">
+                            <Link href={`/product/${item.productId}`}>
                                 <img
-                                    src={item.images?.[0]}
+                                    src={item.image}
                                     alt={item.name}
                                     className="cart-item-img"
                                     onError={e => { e.target.src = 'https://via.placeholder.com/96x96'; }}
                                 />
                             </Link>
                             <div className="cart-item-details">
-                                <Link href={`/product/${item.product_id}`}>
+                                <Link href={`/product/${item.productId}`}>
                                     <p className="cart-item-name">{item.name}</p>
                                 </Link>
                                 <p style={{ fontSize: 12, color: '#878787', marginBottom: 4 }}>Seller: RetailNet</p>
@@ -97,11 +84,11 @@ export default function CartPage() {
                                 </p>
                                 <div className="cart-item-actions">
                                     <div className="qty-control">
-                                        <button className="qty-btn" onClick={() => updateQty(item, -1)} disabled={item.quantity <= 1 || updating === item.id}>−</button>
+                                        <button className="qty-btn" onClick={() => updateQty(item.productId, -1)} disabled={item.quantity <= 1}>−</button>
                                         <span className="qty-value">{item.quantity}</span>
-                                        <button className="qty-btn" onClick={() => updateQty(item, 1)} disabled={item.quantity >= item.stock || updating === item.id}>+</button>
+                                        <button className="qty-btn" onClick={() => updateQty(item.productId, 1)}>+</button>
                                     </div>
-                                    <button className="btn btn-danger" onClick={() => removeItem(item.id)} disabled={updating === item.id}>
+                                    <button className="btn btn-danger" onClick={() => removeItem(item.productId)}>
                                         REMOVE
                                     </button>
                                 </div>

@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { fetchCart, placeOrder, formatPrice } from '@/lib/api';
+import { formatPrice } from '@/lib/api';
+import { getCartSummary } from '@/lib/cartStore';
 
 const INDIAN_STATES = [
     'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
@@ -20,10 +21,11 @@ export default function CheckoutPage() {
     const [cart, setCart] = useState(null);
     const [form, setForm] = useState(EMPTY_FORM);
     const [errors, setErrors] = useState({});
-    const [placing, setPlacing] = useState(false);
-    const [orderError, setOrderError] = useState('');
 
-    useEffect(() => { fetchCart().then(setCart).catch(console.error); }, []);
+    useEffect(() => {
+        const summary = getCartSummary();
+        setCart(summary);
+    }, []);
 
     const validate = () => {
         const e = {};
@@ -41,20 +43,14 @@ export default function CheckoutPage() {
         if (errors[field]) setErrors(e => { const n = { ...e }; delete n[field]; return n; });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const errs = validate();
         if (Object.keys(errs).length > 0) { setErrors(errs); return; }
 
-        setPlacing(true);
-        setOrderError('');
-        try {
-            const result = await placeOrder(form);
-            router.push(`/order-confirmation?orderId=${result.orderId}&orderNumber=${result.orderNumber}`);
-        } catch (err) {
-            setOrderError(err.message);
-            setPlacing(false);
-        }
+        // Save address to sessionStorage for payment page
+        sessionStorage.setItem('checkout_address', JSON.stringify(form));
+        router.push('/payment');
     };
 
     if (!cart) return <div className="page-container" style={{ padding: '40px 0', textAlign: 'center' }}>Loading...</div>;
@@ -75,6 +71,21 @@ export default function CheckoutPage() {
                 <Link href="/">Home</Link> › <Link href="/cart">Cart</Link> › <span style={{ color: '#212121' }}>Checkout</span>
             </div>
 
+            {/* Flipkart-style stepper */}
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 0, marginBottom: 24, background: '#2874f0', padding: '16px 0', borderRadius: 4 }}>
+                {['CART', 'ADDRESS', 'PAYMENT', 'CONFIRM'].map((step, i) => (
+                    <div key={step} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
+                            <div style={{ width: 24, height: 24, borderRadius: '50%', background: i <= 1 ? '#fff' : 'rgba(255,255,255,0.3)', color: i <= 1 ? '#2874f0' : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>
+                                {i < 1 ? '✓' : i + 1}
+                            </div>
+                            <span style={{ fontSize: 11, color: '#fff', fontWeight: i === 1 ? 700 : 400 }}>{step}</span>
+                        </div>
+                        {i < 3 && <div style={{ width: 60, height: 2, background: i < 1 ? '#fff' : 'rgba(255,255,255,0.3)', margin: '0 8px' }} />}
+                    </div>
+                ))}
+            </div>
+
             <div className="checkout-layout">
                 {/* Address Form */}
                 <form className="checkout-form-card" onSubmit={handleSubmit} noValidate>
@@ -83,83 +94,42 @@ export default function CheckoutPage() {
                     <div className="form-grid">
                         <div className="form-group">
                             <label>Full Name *</label>
-                            <input
-                                type="text"
-                                placeholder="Enter your full name"
-                                value={form.name}
-                                className={errors.name ? 'error' : ''}
-                                onChange={e => handleChange('name', e.target.value)}
-                            />
+                            <input type="text" placeholder="Enter your full name" value={form.name} className={errors.name ? 'error' : ''} onChange={e => handleChange('name', e.target.value)} />
                             {errors.name && <span className="error-text">{errors.name}</span>}
                         </div>
 
                         <div className="form-group">
                             <label>Mobile Number *</label>
-                            <input
-                                type="tel"
-                                placeholder="10-digit mobile number"
-                                value={form.phone}
-                                className={errors.phone ? 'error' : ''}
-                                onChange={e => handleChange('phone', e.target.value)}
-                                maxLength={10}
-                            />
+                            <input type="tel" placeholder="10-digit mobile number" value={form.phone} className={errors.phone ? 'error' : ''} onChange={e => handleChange('phone', e.target.value)} maxLength={10} />
                             {errors.phone && <span className="error-text">{errors.phone}</span>}
                         </div>
 
                         <div className="form-group">
                             <label>Email (optional)</label>
-                            <input
-                                type="email"
-                                placeholder="your@email.com"
-                                value={form.email}
-                                onChange={e => handleChange('email', e.target.value)}
-                            />
+                            <input type="email" placeholder="your@email.com" value={form.email} onChange={e => handleChange('email', e.target.value)} />
                         </div>
 
                         <div className="form-group">
                             <label>Pincode *</label>
-                            <input
-                                type="text"
-                                placeholder="6-digit pincode"
-                                value={form.pincode}
-                                className={errors.pincode ? 'error' : ''}
-                                onChange={e => handleChange('pincode', e.target.value)}
-                                maxLength={6}
-                            />
+                            <input type="text" placeholder="6-digit pincode" value={form.pincode} className={errors.pincode ? 'error' : ''} onChange={e => handleChange('pincode', e.target.value)} maxLength={6} />
                             {errors.pincode && <span className="error-text">{errors.pincode}</span>}
                         </div>
 
                         <div className="form-group full">
                             <label>Address (House No, Building, Street, Area) *</label>
-                            <input
-                                type="text"
-                                placeholder="Enter your full address"
-                                value={form.address}
-                                className={errors.address ? 'error' : ''}
-                                onChange={e => handleChange('address', e.target.value)}
-                            />
+                            <input type="text" placeholder="Enter your full address" value={form.address} className={errors.address ? 'error' : ''} onChange={e => handleChange('address', e.target.value)} />
                             {errors.address && <span className="error-text">{errors.address}</span>}
                         </div>
 
                         <div className="form-group">
                             <label>City / Town *</label>
-                            <input
-                                type="text"
-                                placeholder="City"
-                                value={form.city}
-                                className={errors.city ? 'error' : ''}
-                                onChange={e => handleChange('city', e.target.value)}
-                            />
+                            <input type="text" placeholder="City" value={form.city} className={errors.city ? 'error' : ''} onChange={e => handleChange('city', e.target.value)} />
                             {errors.city && <span className="error-text">{errors.city}</span>}
                         </div>
 
                         <div className="form-group">
                             <label>State *</label>
-                            <select
-                                value={form.state}
-                                className={errors.state ? 'error' : ''}
-                                onChange={e => handleChange('state', e.target.value)}
-                            >
+                            <select value={form.state} className={errors.state ? 'error' : ''} onChange={e => handleChange('state', e.target.value)}>
                                 <option value="">Select State</option>
                                 {INDIAN_STATES.map(s => <option key={s} value={s}>{s}</option>)}
                             </select>
@@ -167,15 +137,9 @@ export default function CheckoutPage() {
                         </div>
                     </div>
 
-                    {orderError && (
-                        <div style={{ background: '#fff3f3', border: '1px solid #ff6161', borderRadius: 4, padding: '12px 16px', marginTop: 16, color: '#c0392b', fontSize: 14 }}>
-                            ❌ {orderError}
-                        </div>
-                    )}
-
                     <div className="form-actions">
-                        <button type="submit" className="btn btn-buy-now" style={{ width: '100%', fontSize: 16, padding: '14px' }} disabled={placing}>
-                            {placing ? '⏳ Placing Order...' : '🛒 Confirm Order'}
+                        <button type="submit" className="btn btn-buy-now" style={{ width: '100%', fontSize: 16, padding: '14px' }}>
+                            Continue to Payment →
                         </button>
                     </div>
                 </form>
@@ -186,9 +150,9 @@ export default function CheckoutPage() {
                         <div className="price-summary-header">Order Summary</div>
                         <div className="price-summary-body">
                             {cart.items.map(item => (
-                                <div key={item.id} style={{ display: 'flex', gap: 10, paddingBottom: 12, marginBottom: 12, borderBottom: '1px solid #f1f3f6' }}>
+                                <div key={item.productId} style={{ display: 'flex', gap: 10, paddingBottom: 12, marginBottom: 12, borderBottom: '1px solid #f1f3f6' }}>
                                     <img
-                                        src={item.images?.[0]}
+                                        src={item.image}
                                         alt={item.name}
                                         style={{ width: 48, height: 48, objectFit: 'cover', borderRadius: 2, border: '1px solid #e0e0e0' }}
                                         onError={e => { e.target.src = 'https://via.placeholder.com/48'; }}

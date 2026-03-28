@@ -2,7 +2,8 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
-import { fetchCart, getCurrentUser, logout } from '@/lib/api';
+import { getCurrentUser, logout } from '@/lib/api';
+import { getCartCount } from '@/lib/cartStore';
 import LoginModal from './LoginModal';
 
 export default function Navbar() {
@@ -12,27 +13,18 @@ export default function Navbar() {
     const [user, setUser] = useState(null);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
-    const loadData = useCallback(async () => {
-        try {
-            const cartItems = await fetchCart();
-            // Handle both array and object response structures
-            const count = cartItems.items ? cartItems.items.length : (Array.isArray(cartItems) ? cartItems.length : 0);
-            setCartCount(count);
-            setUser(getCurrentUser());
-        } catch (error) {
-            console.error('Error loading navbar data:', error);
-        }
+    const loadData = useCallback(() => {
+        setCartCount(getCartCount());
+        setUser(getCurrentUser());
     }, []);
 
     useEffect(() => {
         loadData();
         window.addEventListener('cart-updated', loadData);
         window.addEventListener('user-updated', loadData);
-        const interval = setInterval(loadData, 10000);
         return () => {
             window.removeEventListener('cart-updated', loadData);
             window.removeEventListener('user-updated', loadData);
-            clearInterval(interval);
         };
     }, [loadData]);
 
@@ -102,7 +94,7 @@ export default function Navbar() {
                         <Link href="/cart" className="nav-item" style={{ position: 'relative' }}>
                             <span>🛒</span> Cart
                             {cartCount > 0 && (
-                                <span style={{ position: 'absolute', top: '0', right: '-4px', background: '#ff6161', color: 'white', fontSize: '10px', padding: '0 4px', borderRadius: '10px' }}>
+                                <span style={{ position: 'absolute', top: '0', right: '-4px', background: '#ff6161', color: 'white', fontSize: '10px', padding: '0 4px', borderRadius: '10px', fontWeight: 'bold' }}>
                                     {cartCount}
                                 </span>
                             )}

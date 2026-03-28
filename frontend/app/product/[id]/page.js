@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { fetchProduct, addToCart, formatPrice } from '@/lib/api';
+import { fetchProduct, formatPrice } from '@/lib/api';
+import { addItemToCart } from '@/lib/cartStore';
 
 function Toast({ message, onHide }) {
     useEffect(() => { const t = setTimeout(onHide, 2500); return () => clearTimeout(t); }, [onHide]);
@@ -15,34 +16,22 @@ export default function ProductDetailPage() {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [activeImage, setActiveImage] = useState(0);
-    const [adding, setAdding] = useState(false);
     const [toast, setToast] = useState('');
 
     useEffect(() => {
         fetchProduct(id).then(p => { setProduct(p); setLoading(false); }).catch(() => setLoading(false));
     }, [id]);
 
-    const handleAddToCart = async () => {
-        setAdding(true);
-        try {
-            await addToCart(product.id);
-            setToast('✅ Added to cart!');
-        } catch (e) {
-            setToast('❌ ' + e.message);
-        } finally {
-            setAdding(false);
-        }
+    const handleAddToCart = () => {
+        if (!product) return;
+        addItemToCart(product);
+        setToast('✅ Added to cart!');
     };
 
-    const handleBuyNow = async () => {
-        setAdding(true);
-        try {
-            await addToCart(product.id);
-            router.push('/cart');
-        } catch (e) {
-            setToast('❌ ' + e.message);
-            setAdding(false);
-        }
+    const handleBuyNow = () => {
+        if (!product) return;
+        addItemToCart(product);
+        router.push('/cart');
     };
 
     if (loading) return (
@@ -109,14 +98,14 @@ export default function ProductDetailPage() {
                         <button
                             className="btn btn-add-cart"
                             onClick={handleAddToCart}
-                            disabled={adding || product.stock === 0}
+                            disabled={product.stock === 0}
                         >
-                            🛒 {adding ? 'Adding...' : 'Add to Cart'}
+                            🛒 Add to Cart
                         </button>
                         <button
                             className="btn btn-buy-now"
                             onClick={handleBuyNow}
-                            disabled={adding || product.stock === 0}
+                            disabled={product.stock === 0}
                         >
                             ⚡ Buy Now
                         </button>
