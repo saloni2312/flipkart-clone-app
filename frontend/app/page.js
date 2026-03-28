@@ -63,21 +63,50 @@ function ProductListingContent() {
             </div>
 
             <div className="page-container" style={{ paddingBottom: '40px' }}>
-                {/* 3-Column Banner Grid */}
+                {/* Specific 3-Column Banner Grid (Screenshot Style) */}
                 {!category && !search && (
-                    <div className="home-banner-grid">
-                        <div className="banner-item"><img src="/banner_fridge.png" alt="Fridge Sale" /></div>
-                        <div className="banner-item"><img src="/banner_aqua.png" alt="Aqua Sale" /></div>
-                        <div className="banner-item"><img src="/banner_daikin.png" alt="AC Sale" /></div>
+                    <div className="home-banner-grid" style={{ marginTop: '16px' }}>
+                        <div className="banner-item"><img src="/banner_jewellery.png" alt="Jewellery" /></div>
+                        <div className="banner-item"><img src="/banner_polo.png" alt="Polo" /></div>
+                        <div className="banner-item"><img src="/banner_trendy.png" alt="Trendy" /></div>
                     </div>
                 )}
 
-                {/* Hot Pick Section */}
+                {/* Dense Sub-Category Grid (Screenshot Style) */}
                 {!category && !search && (
-                    <div className="hot-pick-section">
-                        <p style={{ textAlign: 'left', fontSize: '12px', color: '#878787', marginBottom: '8px', fontWeight: '600' }}>Today's Hot Pick</p>
-                        <div className="hot-pick-banner">
-                            <img src="/banner_nothing.png" alt="Nothing Phone 2a" />
+                    <div className="subcat-grid">
+                        {[
+                            { label: 'Celeb Looks', img: 'https://m.media-amazon.com/images/I/61Nl0uQvXHL._SY879_.jpg' },
+                            { label: 'Shirts, Tshirts', img: 'https://m.media-amazon.com/images/I/61WfQfNfS9L._SX679_.jpg' },
+                            { label: 'Jeans', img: 'https://m.media-amazon.com/images/I/71S6SjC1DQL._SX695_.jpg' },
+                            { label: 'Sports Shoes', img: 'https://m.media-amazon.com/images/I/61-v6p9e8aL._SX695_.jpg' },
+                            { label: 'Watches', img: 'https://m.media-amazon.com/images/I/61XZQXFQeBL._SX679_.jpg' },
+                            { label: 'Kids Wear', img: 'https://m.media-amazon.com/images/I/81M+Z9o2YDL._SX679_.jpg' },
+                            { label: 'Backpacks', img: 'https://m.media-amazon.com/images/I/61k1r-rYv9L._SX679_.jpg' },
+                            { label: 'Jewellery', img: 'https://m.media-amazon.com/images/I/71T6z7v4YpL._SX679_.jpg' },
+                            { label: 'Sunglasses', img: 'https://m.media-amazon.com/images/I/61-v6p9e8aL._SX695_.jpg' },
+                            { label: 'Dresses', img: 'https://m.media-amazon.com/images/I/61Nl0uQvXHL._SY879_.jpg' },
+                        ].map((item, idx) => (
+                            <div key={idx} className="subcat-tile">
+                                <div className="subcat-icon-wrap">
+                                    <img src={item.img} alt={item.label} />
+                                </div>
+                                <span className="subcat-label">{item.label}</span>
+                            </div>
+                        ))}
+                    </div>
+                )}
+
+                {/* Shop for Loved Ones (Lifestyle Section) */}
+                {!category && !search && (
+                    <div className="lifestyle-section">
+                        <div className="lifestyle-header">
+                            <h2>Shop for loved ones</h2>
+                        </div>
+                        <div className="lifestyle-grid">
+                            <div className="lifestyle-card"><img src="/lifestyle_men.png" alt="Men" /></div>
+                            <div className="lifestyle-card"><img src="/lifestyle_women.png" alt="Women" /></div>
+                            <div className="lifestyle-card"><img src="/lifestyle_spoyl.png" alt="Spoyl" /></div>
                         </div>
                     </div>
                 )}
